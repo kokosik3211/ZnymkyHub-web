@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store/store";
 import "./assets/sass/main.scss";
-import axios from 'axios';
+import axios from "axios";
 
 Vue.config.productionTip = false;
 
@@ -13,13 +13,15 @@ new Vue({
   render: h => h(App)
 }).$mount("#app");
 
-axios.interceptors.request.use((config: any) => {
-
-  const authToken = store.getters['auth/authToken'];
-  if (authToken) {
-    config.headers.Authorization = `Bearer ${authToken}`;
+axios.interceptors.request.use(
+  (config: any) => {
+    const authToken = store.getters["auth/authToken"];
+    if (authToken) {
+      config.headers.Authorization = `Bearer ${authToken}`;
+    }
+    return config;
+  },
+  (err: any) => {
+    return Promise.reject(err);
   }
-  return config;
-}, (err: any) => {
-  return Promise.reject(err);
-});
+);
