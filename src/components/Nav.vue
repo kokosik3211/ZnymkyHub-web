@@ -3,7 +3,8 @@
   <div class="container">
   <div class="navbar-brand">
     <router-link to="/" class="navbar-item">
-      <img src="https://bulma.io/images/bulma-logo.png" alt="znymkyhub" width="112" height="28">
+      <!-- <img src="https://bulma.io/images/bulma-logo.png" alt="znymkyhub" width="112" height="28"> -->
+      <img src="../assets/img/camera.png" alt="znymkyhub" height="28">
     </router-link>
     <div class="navbar-burger burger" data-target="navbarExampleTransparentExample" @click="showNav = !showNav" :class="{ 'is-active': showNav }">
       <span></span>
@@ -80,9 +81,9 @@
       <router-link to="/dashboard/home" class="navbar-item" v-show="isAuthenticated">Dashboard</router-link>
       <a class="navbar-item" href="javascript:void(0)" v-on:click="logoff" v-show="isAuthenticated">Logoff {{ profile.firstName }}</a>
       
-      <router-link to="/register" class="navbar-item" v-show="!isAuthenticated">Email signup</router-link>
-      <router-link to="/login" class="navbar-item" v-show="!isAuthenticated">Email login</router-link>
-      <router-link to="/facebook-login" class="navbar-item" v-show="!isAuthenticated">Facebook signup/login</router-link>
+      <router-link to="/register" class="navbar-item" v-show="!isAuthenticated">Sign up</router-link>
+      <router-link to="/login" class="navbar-item" v-show="!isAuthenticated">Sign in</router-link>
+      <!-- <router-link to="/facebook-login" class="navbar-item" v-show="!isAuthenticated">Facebook signup/login</router-link> -->
         
       <!-- <div class="navbar-item">
         <div class="field is-grouped">
