@@ -4,7 +4,7 @@
   <br>
   <div class="hero-body has-background-light">
     <div class="container has-text-centered">
-      <h3 class="has-text-grey is-size-4">Join ZnymkuHub</h3>
+      <h3 class="has-text-grey is-size-4">Join ZnymkyHub</h3>
       <p class="has-text-grey is-size-6">In what role you want to join:</p>
       <div class="column is-three-fifths is-offset-one-fifth is-centered">
           <div class="column buttons has-addons is-centered">
@@ -47,6 +47,13 @@
                   </p>
               </div>
 
+              <div v-if="showInstagramUrl" class="field">
+                  <p class="control has-icons-left">
+                      <input class="input" type="text" placeholder="Instagram profile" v-model="user.instagramUrl">
+                      <span class="icon is-small is-left"><i class="fab fa-instagram"></i></span>
+                  </p>
+              </div>
+
               <div class="field">
                 <div class="control">
                   <input class="input" type="text" placeholder="Location" v-model="user.location" />
@@ -70,7 +77,8 @@
 
         <div class="column is-3 is-centered">
           <p style="margin-bottom: 7px;">Use social network</p>
-          <component v-bind:is="fbauth" v-bind="roleid"></component>
+          <!-- <component v-bind:is="fbauth" v-bind="roleid"></component> -->
+          <FacebookAuth/>
         </div>
       </div>
     </div>
@@ -79,14 +87,15 @@
         <router-link to="/login">Login</router-link>
       </p>
     </div> 
-    <img :src="image">
+    <!-- <img :src="image"> -->
+    <!-- <img src="https://images.unsplash.com/photo-1549417338-6f137ab2cd20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80" width="100" height="100"/> -->
   </div>
 </section>
 </template>
 
 <script lang="ts">
 import Spinner from "@/components/Spinner.vue"; // @ is an alias to /src
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { UserRegistration } from "../../models/user.registration.interface";
 import { accountService } from "../../services/account.service";
 import FacebookAuth from "@/views/account/FacebookAuth.vue"
@@ -104,36 +113,55 @@ export default class RegistrationForm extends Vue {
   private errors: string = "";
   private user = {} as UserRegistration;
   private visible = false;
+  private showInstagramUrl = false;
   private fbauth = "FacebookAuth";
+  // @Prop()
+  // DynamicRegistration: number = 0;
 
   private image: string = '';
 
   created(){
-    
+    this.user.roleId = 0;
   }
 
   mounted () {
-    this.user.roleId = 0;
-    console.log(this.user.roleId);
+    // this.user.roleId = 0;
+    // console.log(this.user.roleId);
 
 
-    console.log("axios post...");
-    axios.post("http://localhost:5000/api/image/getimage").then(response => {
-      console.log(response.data);
-      this.image = response.data;
-    }).catch(e => {
-      console.log(e);
-    });
+    // console.log("axios post...");
+    // axios.post("http://localhost:5000/api/image/getimage").then(response => {
+    //   console.log(response.data);
+    //   this.image = response.data;
+    // }).catch(e => {
+    //   console.log(e);
+    // });
+
+    // if(this.DynamicRegistration == 2){
+    //   this.changeRoleToPhotographer()
+    // }
+    // else if(this.DynamicRegistration == 3){
+    //   this.changeRoleToUser();
+    // }
+
   }
 
   get roleid() {
     return {roleid : this.user.roleId};
   }
 
+  get isPh() {
+    if(this.user.roleId == 2){
+      return true;
+    }
+    return false;
+  }
+
   public changeRoleToPhotographer(){
     this.user.roleId = 2;
     console.log(this.user.roleId);
     this.visible = true;
+    this.showInstagramUrl = true;
 
     var kek : any = document.getElementById("isUser");
     kek.classList.remove("is-success");
@@ -145,6 +173,7 @@ export default class RegistrationForm extends Vue {
     this.user.roleId = 3;
     console.log(this.user.roleId);
     this.visible = true;
+    this.showInstagramUrl = false;
 
     var kek : any = document.getElementById("isPhotographer");
     kek.classList.remove("is-success");

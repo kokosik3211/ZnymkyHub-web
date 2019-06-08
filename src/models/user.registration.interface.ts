@@ -6,4 +6,5 @@ export interface UserRegistration {
   lastName: string;
   homeTown: string;
   roleId: number;
+  instagramUrl: string
 }

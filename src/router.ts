@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import RegistrationForm from "./views/account/RegistrationForm.vue";
 import RegistrationPage from "./views/account/RegistrationPage.vue";
 import LoginForm from "./views/account/LoginForm.vue";
+import SearchForm from "./views/Search.vue";
 import DashboardRoot from "./views/dashboard/Root.vue";
 import DashboardHome from "./views/dashboard/Home.vue";
 import store from "./store/store";
@@ -40,6 +41,11 @@ const router = new Router({
       path: "/login",
       name: "loginForm",
       component: LoginForm
+    },
+    {
+      path: "/search/:selectedCity?/:selectedPhType?",
+      name: "searchForm",
+      component: SearchForm,
     },
     {
       path: "/dashboard",

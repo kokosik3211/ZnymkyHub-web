@@ -4,6 +4,12 @@ import router from "./router";
 import store from "./store/store";
 import "./assets/sass/main.scss";
 import axios from "axios";
+import Buefy from 'buefy';
+import '@mdi/font/css/materialdesignicons.css';
+
+Vue.use(Buefy, {
+  defaultIconPack: 'mdi'
+});
 
 Vue.config.productionTip = false;
 

@@ -4,7 +4,7 @@
   <div class="navbar-brand">
     <router-link to="/" class="navbar-item">
       <!-- <img src="https://bulma.io/images/bulma-logo.png" alt="znymkyhub" width="112" height="28"> -->
-      <img src="../assets/img/camera.png" alt="znymkyhub" height="28">
+      <img src="../assets/img/photos.png" alt="znymkyhub" height="28">
     </router-link>
     <div class="navbar-burger burger" data-target="navbarExampleTransparentExample" @click="showNav = !showNav" :class="{ 'is-active': showNav }">
       <span></span>
@@ -17,61 +17,46 @@
     <div class="navbar-start">
       <router-link to="/" class="navbar-item">Home</router-link>
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
+        <a class="navbar-link" href="#">
           Photographers
         </a>
         <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="https://bulma.io/documentation/overview/start/">
-            Overview
+          <a class="navbar-item" href="">
+            Top rated
           </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
-            Modifiers
+          <a class="navbar-item" href="">
+            Recently updated
           </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-            Columns
-          </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
-            Layout
-          </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
-            Form
-          </a>
+          <router-link to="/search" class="navbar-item" href="">
+            Search
+          </router-link>
           <hr class="navbar-divider">
-          <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
-            Elements
-          </a>
-          <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-            Components
+          <a class="navbar-item is-active" href="">
+            Favourites
           </a>
         </div>
       </div>
 
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
+        <a class="navbar-link" href="#">
           Photos
         </a>
         <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="https://bulma.io/documentation/overview/start/">
-            Overview
+          <a class="navbar-item" href="">
+            Best of the week
           </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
-            Modifiers
+          <a class="navbar-item" href="">
+            Best of the year
           </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-            Columns
-          </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
-            Layout
-          </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
-            Form
+          <a class="navbar-item" href="">
+            Fresh
           </a>
           <hr class="navbar-divider">
-          <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
-            Elements
+          <a class="navbar-item" href="">
+            Faves feeds
           </a>
-          <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-            Components
+          <a class="navbar-item is-active" href="">
+            Favourites
           </a>
         </div>
       </div>

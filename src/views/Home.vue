@@ -29,10 +29,10 @@
     </section>
   </div> -->
 <div>
-  <section class="hero is-dark is-fullheight-with-navbar" style="background:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://mdbootstrap.com/img/Photos/Others/images/47.jpg) center no-repeat;background-size: cover;">
+  <section class="hero is-dark is-fullheight-with-navbar video" style="">
     <!-- Hero head: will stick at the top -->
-    <div class="hero-head">
-      <!-- <header class="navbar">
+    <!-- <div class="hero-head">
+       <header class="navbar">
         <div class="container">
           <div class="navbar-brand">
             <a class="navbar-item">
@@ -66,14 +66,20 @@
             </div>
           </div>
         </div>
-      </header> -->
+      </header>
+    </div> -->
+
+    <div class="hero-video">
+        <video playsinline autoplay muted loop src="../assets/video/fordelete.mp4" style="object-fit: cover;">
+            <!-- <source src="vid/BGvid.webm" type="video/webm">
+            <source src="vid/BGvid.mp4" type="video/mp4"> -->
+        </video>
     </div>
 
     <!-- Hero content: will be in the middle -->
     <div class="hero-body">
       <div class="container has-text-centered">
         <h1 class="title">
-          
         </h1>
         <!-- <h2 class="subtitle">
           Subtitle
@@ -83,13 +89,13 @@
           <div class="column is-two-fifths is-pulled-left has-text-centered">
             <p class="is-size-2">I'm looking for a photographer!</p>
             <div class="column is-three-fifths is-offset-one-fifth">
-              <span class="button is-danger is-outlined is-fullwidth">Directory of photographers</span>
+              <router-link to="/register" class="button is-danger is-outlined is-fullwidth">Directory of photographers</router-link>
             </div>
           </div>
           <div class="column is-two-fifths is-pulled-right has-text-centered">
             <p class="is-size-2">I'm a photographer looking for good photos :)</p>
             <div class="column is-three-fifths is-offset-one-fifth">
-              <a class="button is-danger is-outlined is-fullwidth">Join</a>
+              <router-link to="/register" class="button is-danger is-outlined is-fullwidth">Join</router-link>
             </div>
           </div>
         </div>
@@ -103,18 +109,21 @@
       <nav class="tabs is-boxed is-fullwidth">
         <div class="container">
           <ul>
-            <li><a>Photographers</a></li>
-            <li><a>Best photos</a></li>
-            <li><a>Photographer search</a></li>
+            <li><a @click="scrollMeTo('photographers')">Photographers</a></li>
+            <li><a @click="scrollMeTo('photos')">Best photos</a></li>
+            <li><a @click="scrollMeTo('phsearch')">Photographer search</a></li>
           </ul>
         </div>
       </nav>
     </div>
   </section>
   <main>
-    <avatar username="Kek Lol"></avatar>
+    <!-- <avatar v-if="user.fullName" :username=user.fullName :src=user.photo></avatar>
+    <button v-on:click="test">Kek</button> -->
   </main>
-  
+  <PhotographersForMain id="photographers"/>
+  <PhotosForMain id="photos"/>
+  <SearchingPhotographerForMain id="phsearch"/>
 </div>
 </template>
 
@@ -122,16 +131,60 @@
 import { Component, Vue } from "vue-property-decorator";
 import Nav from '@/components/Nav.vue'; 
 import Avatar from 'vue-avatar/src/Avatar.vue';
+import PhotographersForMain from '@/components/PhotographersForMain.vue';
+import PhotosForMain from '@/components/PhotosForMain.vue';
+import SearchingPhotographerForMain from '@/components/SearchingPhotographerForMain.vue';
+import { User } from "../models/user.interface";
+import axios from "axios";
+
 
 @Component({
   components: {
     Nav,
-    Avatar
+    Avatar,
+    PhotographersForMain,
+    PhotosForMain,
+    SearchingPhotographerForMain
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  private user = {} as User;
+  mounted(){
+    // axios.post("http://localhost:5000/api/user/getuser").then(response => {
+    //         console.log(response.data);
+    //         this.user = response.data;
+    //         console.log(this.user);
+    //     }).catch(e => {
+    //         console.log(e);
+    // });
+  }
+
+  public scrollMeTo(id: string) {
+    /*var element = this.$refs[refName];
+    var top = <HTMLElement>element.offsetTop;
+
+    window.scrollTo(0, top);*/
+    var element = document.getElementById(id);
+    var position = element!.getBoundingClientRect();
+    var x = position.left;
+    var y = position.top;
+    window.scrollTo(0, y);
+  }
+
+  // public test(){
+  //   axios.post("http://localhost:5000/api/user/gettestuser").then(response => {
+  //           console.log(response.data);
+  //           this.user = response.data;
+  //           console.log(this.user);
+  //       }).catch(e => {
+  //           console.log(e);
+  //   });
+  // }
+}
 </script>
 
 <style scoped>
-
+.hero{
+  background:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/img/poster.jpg') center no-repeat;background-size: cover;
+}
 </style>

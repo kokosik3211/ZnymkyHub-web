@@ -3,7 +3,7 @@
         <a href="javascript:void(0)" v-if="!isBusy"  v-on:click="launchFbLogin">
           <img src="../../assets/img/facebook.png" style="margin-top: 7px;" alt="Login with your facebook account">
         </a>
-        <p>{{this.roleid}}</p>
+        <!-- <p>{{this.roleid}}</p> -->
         <Spinner v-bind:show="isBusy" />
         <div class="errors-container" v-if="failed">
           <p>Oops! Your facebook login failed.</p>
@@ -33,8 +33,8 @@ export default class FacebookAuth extends Vue {
  private isBusy: boolean = false;
  private errors: string = '';
 
- @Prop()
-  roleid!: number;
+//  @Prop()
+//   roleid: number = 0;
 
  private created() {
     if (window.addEventListener) {
