@@ -1,50 +1,62 @@
 <template>
-<div>
-  <!-- <main>
+  <div>
+    <!-- <main>
     {{selectedCity}} {{selectedPhType}}
   </main> -->
-  <section class="hero is-light" style="margin-top: 50px;">
-  <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></b-loading>
-  <div class="hero-body">
-    <div class="has-text-centered title">Search for a photographer</div>
-    <div class="container">
-      <div class="columns is-multiline is-centered is-vcentered">
-        <div class="column is-3">
-          <!-- <p class="content"><b>City:</b> {{ selectedCity }}</p> -->
-          <b-field>
-            <b-autocomplete
-                rounded
-                v-model="cityName"
-                :data="filteredUkrCitiesArray"
-                placeholder="e.g. Lviv"
-                icon="magnify"
-                @select="option => selectedCity = option">
-                <template slot="empty">No results found</template>
-            </b-autocomplete>
-          </b-field>
-        </div>
-        <div class="column is-3">
-          <!-- <p class="content"><b>Ph type:</b> {{ selectedPhType }}</p> -->
-          <b-field>
-            <b-autocomplete
-                rounded
-                v-model="phTypeName"
-                :data="filteredPhTypesArray"
-                placeholder="e.g. Travel"
-                icon="magnify"
-                @select="option => selectedPhType = option">
-                <template slot="empty">No results found</template>
-            </b-autocomplete>
-          </b-field>
-        </div>
-        <div class="column is-2">
-          <a class="button is-danger is-rounded" @click="submitSearch">Search</a>
+    <section class="hero is-light" style="margin-top: 50px;">
+      <b-loading
+        :is-full-page="isFullPage"
+        :active.sync="isLoading"
+        :can-cancel="true"
+      ></b-loading>
+      <div class="hero-body">
+        <div class="has-text-centered title">Search for a photographer</div>
+        <div class="container">
+          <div class="columns is-multiline is-centered is-vcentered">
+            <div class="column is-3">
+              <!-- <p class="content"><b>City:</b> {{ selectedCity }}</p> -->
+              <b-field>
+                <b-autocomplete
+                  rounded
+                  v-model="cityName"
+                  :data="filteredUkrCitiesArray"
+                  placeholder="e.g. Lviv"
+                  icon="magnify"
+                  @select="option => (selectedCity = option)"
+                >
+                  <template slot="empty"
+                    >No results found</template
+                  >
+                </b-autocomplete>
+              </b-field>
+            </div>
+            <div class="column is-3">
+              <!-- <p class="content"><b>Ph type:</b> {{ selectedPhType }}</p> -->
+              <b-field>
+                <b-autocomplete
+                  rounded
+                  v-model="phTypeName"
+                  :data="filteredPhTypesArray"
+                  placeholder="e.g. Travel"
+                  icon="magnify"
+                  @select="option => (selectedPhType = option)"
+                >
+                  <template slot="empty"
+                    >No results found</template
+                  >
+                </b-autocomplete>
+              </b-field>
+            </div>
+            <div class="column is-2">
+              <a class="button is-danger is-rounded" @click="submitSearch"
+                >Search</a
+              >
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<!-- <div class="columns" style="margin-top:15px;">
+    </section>
+    <!-- <div class="columns" style="margin-top:15px;">
     <div class="column is-2 is-offset-1" style="text-align: center; padding: 27px;">
         <div>
             <avatar :size="150" username="Volodymyr Ivash" style="display: inline-block;"></avatar>
@@ -82,7 +94,7 @@
     </div>
 </div> -->
 
-<!-- <div class="columns is-mobile is-multiline is-centered" style="margin-top:15px;">
+    <!-- <div class="columns is-mobile is-multiline is-centered" style="margin-top:15px;">
         <div class="column is-2" style="text-align: center; padding: 27px;">
             <div>
                 <avatar :size="150" username="Andriy Oliynyk" style="display: inline-block;"></avatar>
@@ -152,8 +164,7 @@
     </div>
 </div> -->
 
-
-<!-- <div class="columns is-mobile is-multiline is-centered">
+    <!-- <div class="columns is-mobile is-multiline is-centered">
     <div v-for="(photographer) in Photographers" :key="photographer.id" class="column" style="text-align: center; padding: 27px;">
         <div>
             <avatar :size="100" :username="photographer.fullName" :src="photographer.photo" style="display: inline-block;"></avatar>
@@ -163,44 +174,77 @@
     </div>
 </div> -->
 
-<div v-if="done" class="container" style="margin-top: 24px; margin-bottom: 24px;">
-<div class="columns is-mobile is-multiline is-centered" style="margin-top:15px;">
-        <div v-for="(result) in SearchResultList" :key="result.id" class="column is-12">
-            <div class="columns">
-                <div class="column is-offset-3 is-9 has-text-centered">${{result.price}} per hour</div>
+    <div
+      v-if="done"
+      class="container"
+      style="margin-top: 24px; margin-bottom: 24px;"
+    >
+      <div
+        class="columns is-mobile is-multiline is-centered"
+        style="margin-top:15px;"
+      >
+        <div
+          v-for="result in SearchResultList"
+          :key="result.id"
+          class="column is-12"
+        >
+          <div class="columns">
+            <div class="column is-offset-3 is-9 has-text-centered">
+              ${{ result.price }} per hour
             </div>
-            <div class="columns is-vcentered">
-                <div class="column is-2" style="text-align: center;">
-                    <div>
-                        <avatar :size="150" :username="result.fullName" :src="result.base64" style="display: inline-block;"></avatar>
-                    </div>
-                    <p class="is-size-7" style="margin-top: 7px;">{{result.fullName}}</p>
-                    <p class="is-italic is-size-7">{{result.location}}</p>
+          </div>
+          <div class="columns is-vcentered">
+            <div class="column is-2" style="text-align: center;">
+              <div>
+                <avatar
+                  :size="150"
+                  :username="result.fullName"
+                  :src="result.base64"
+                  style="display: inline-block;"
+                ></avatar>
+              </div>
+              <p class="is-size-7" style="margin-top: 7px;">
+                {{ result.fullName }}
+              </p>
+              <p class="is-italic is-size-7">{{ result.location }}</p>
+            </div>
+
+            <div v-if="!result.photos.length" class="column">
+              <div class="columns is-centered">
+                <b-notification
+                  type="is-warning"
+                  has-icon
+                  aria-close-label="Close notification"
+                  role="alert"
+                >
+                  This photographer has not uploaded any photos of this type
+                  yet.
+                </b-notification>
+              </div>
+            </div>
+            <div
+              v-for="photo in result.photos"
+              :key="photo.id"
+              class="column"
+              style="text-align: center; padding: 27px;"
+            >
+              <div style="display: inline-block;">
+                <div class="img__wrap" style="display: inline-block;">
+                  <img :src="photo.base64" />
+                  <div class="img__description_layer">
+                    <p class="img__description">
+                      <i class="far fa-heart"></i>
+                      {{ photo.numlikes }}&nbsp;&nbsp;&nbsp;<i
+                        class="far fa-bookmark"
+                      ></i>
+                      {{ photo.numsaves }}
+                    </p>
+                  </div>
                 </div>
-                
-                <div v-if="!result.photos.length" class="column">
-                    <div class="columns is-centered">
-                        <b-notification
-                            type="is-warning"
-                            has-icon
-                            aria-close-label="Close notification"
-                            role="alert">
-                            This photographer has not uploaded any photos of this type yet.
-                        </b-notification>
-                    </div>
-                </div>
-                <div v-for="(photo) in result.photos" :key="photo.id" class="column" style="text-align: center; padding: 27px;">
-                    <div style="display: inline-block;">
-                        <div class="img__wrap" style="display: inline-block;">
-                            <img :src="photo.base64"/>
-                            <div class="img__description_layer">
-                                <p class="img__description"><i class="far fa-heart"></i> {{photo.numlikes}}&nbsp;&nbsp;&nbsp;<i class="far fa-bookmark"></i> {{photo.numsaves}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
-                <!-- <div class="column" style="text-align: center;">
+              </div>
+            </div>
+
+            <!-- <div class="column" style="text-align: center;">
                     <div style="display: inline-block;">
                         <div class="img__wrap" style="display: inline-block;">
                             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"/>
@@ -210,36 +254,33 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
-            
+          </div>
         </div>
-    </div>
-    <hr>
+      </div>
+      <hr />
       <b-pagination
-            :total="total"
-            :current.sync="current"
-            :order="order"
-            :size="size"
-            :simple="isSimple"
-            :rounded="isRounded"
-            :per-page="perPage"
-            aria-next-label="Next page"
-            aria-previous-label="Previous page"
-            aria-page-label="Page"
-            aria-current-label="Current page">
-        </b-pagination>
-</div>
-    
-    
-</div>
+        :total="total"
+        :current.sync="current"
+        :order="order"
+        :size="size"
+        :simple="isSimple"
+        :rounded="isRounded"
+        :per-page="perPage"
+        aria-next-label="Next page"
+        aria-previous-label="Previous page"
+        aria-page-label="Page"
+        aria-current-label="Current page"
+      >
+      </b-pagination>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-import Avatar from 'vue-avatar/src/Avatar.vue';
+import Avatar from "vue-avatar/src/Avatar.vue";
 import { User } from "../models/user.interface";
 import axios from "axios";
-
 
 @Component({
   components: {
@@ -255,123 +296,136 @@ export default class Search extends Vue {
   private total = 15;
   private current = 1;
   private perPage = 15;
-  private order = 'is-centered';
-  private size = 'is-small';
+  private order = "is-centered";
+  private size = "is-small";
   private isSimple = false;
   private isRounded = true;
 
-  @Watch('current')
+  @Watch("current")
   onPropertyChanged(value: string, oldValue: string) {
     // Do stuff with the watcher here.
-    console.log(`New 'current' value = ${value}`);
-    console.log(`Old 'current' value = ${oldValue}`);
+    //console.log(`New 'current' value = ${value}`);
+    //console.log(`Old 'current' value = ${oldValue}`);
     this.isLoading = true;
-    axios.post(`http://localhost:5000/api/search/performsearch/`).then(response => {
-            //this.Photos = response.data;
-            //console.log(this.Photos);
-            this.isLoading = false;
-        }).catch(e => {
-            console.log(e);
-        });
+    axios
+      .post(`http://localhost:5000/api/search/performsearch/`)
+      .then(response => {
+        //this.Photos = response.data;
+        //console.log(this.Photos);
+        this.isLoading = false;
+      })
+      .catch(e => {
+        //console.log(e);
+      });
   }
 
   // Search parameters
   private SearchResultList = [];
   private done: boolean = false;
   //@Prop()
-  private selectedCity: string = '';
+  private selectedCity: string = "";
 
   //@Prop()
-  private selectedPhType: string = '';
+  private selectedPhType: string = "";
 
   private ukrCities: string[] = [
-      'Cherkasy',
-      'Chernihiv',
-      'Chernivtsi',
-      'Dnipro',
-      'Donetsk',
-      'Ivano-Frankivsk',
-      'Kharkiv',
-      'Kherson',
-      'Khmelnytskyi',
-      'Kiev',
-      'Kropyvnytskyi',
-      'Luhansk',
-      'Lviv',
-      'Mykolaiv',
-      'Odessa',
-      'Poltava',
-      'Rivne',
-      'Sumy',
-      'Ternopil',
-      'Vinnytsia',
-      'Lutsk',
-      'Uzhhorod',
-      'Zaporizhia',
-      'Zhytomyr'
-    ];
-    private cityName = '';
+    "Cherkasy",
+    "Chernihiv",
+    "Chernivtsi",
+    "Dnipro",
+    "Donetsk",
+    "Ivano-Frankivsk",
+    "Kharkiv",
+    "Kherson",
+    "Khmelnytskyi",
+    "Kiev",
+    "Kropyvnytskyi",
+    "Luhansk",
+    "Lviv",
+    "Mykolaiv",
+    "Odessa",
+    "Poltava",
+    "Rivne",
+    "Sumy",
+    "Ternopil",
+    "Vinnytsia",
+    "Lutsk",
+    "Uzhhorod",
+    "Zaporizhia",
+    "Zhytomyr"
+  ];
+  private cityName = "";
 
-    private phTypes: string[] = [
-      'Love story',
-      'Wedding',
-      'Pending',
-      'Children',
-      'Family',
-      'Portrait',
-      'Nude',
-      'Newborn',
-      'Reportage',
-      'Landscape',
-      'Food photo',
-      'Business',
-      'Fashion',
-      'Commercial photo',
-      'Travel'
-    ];
-    private phTypeName = '';
+  private phTypes: string[] = [
+    "Love story",
+    "Wedding",
+    "Pending",
+    "Children",
+    "Family",
+    "Portrait",
+    "Nude",
+    "Newborn",
+    "Reportage",
+    "Landscape",
+    "Food photo",
+    "Business",
+    "Fashion",
+    "Commercial photo",
+    "Travel"
+  ];
+  private phTypeName = "";
 
-  mounted(){
+  mounted() {
     this.selectedCity = this.$route.params.selectedCity;
     this.selectedPhType = this.$route.params.selectedPhType;
-    if(this.selectedCity != undefined && this.selectedPhType != undefined){
-        this.isLoading = true;
+    if (this.selectedCity != undefined && this.selectedPhType != undefined) {
+      this.isLoading = true;
     }
   }
 
   get filteredUkrCitiesArray() {
-      return this.ukrCities.filter((option) => {
-                    return option
-                        .toString()
-                        .toLowerCase()
-                        .indexOf(this.cityName.toLowerCase()) >= 0
-                })
-    }
+    return this.ukrCities.filter(option => {
+      return (
+        option
+          .toString()
+          .toLowerCase()
+          .indexOf(this.cityName.toLowerCase()) >= 0
+      );
+    });
+  }
 
-    get filteredPhTypesArray() {
-      return this.phTypes.filter((option) => {
-                    return option
-                        .toString()
-                        .toLowerCase()
-                        .indexOf(this.phTypeName.toLowerCase()) >= 0
-                })
-    }
+  get filteredPhTypesArray() {
+    return this.phTypes.filter(option => {
+      return (
+        option
+          .toString()
+          .toLowerCase()
+          .indexOf(this.phTypeName.toLowerCase()) >= 0
+      );
+    });
+  }
 
-    private submitSearch(){
-        this.isLoading = true;
-        axios.post(`http://localhost:5000/api/search/performsearch/${this.selectedCity}/${this.selectedPhType}`)
-            .then(response => {
-                this.SearchResultList = response.data;
-                console.log(`Search result: ${this.SearchResultList}`);
-                for(let i = 0; i < this.SearchResultList.length; i++){
-                    console.log(this.SearchResultList[i]);
-                }
-                this.done = true;
-                this.isLoading = false;
-            }).catch(e => {
-                console.log(e);
-            });
-    }
+  private submitSearch() {
+    this.isLoading = true;
+    axios
+      .post(
+        `http://localhost:5000/api/search/performsearch/${this.selectedCity}/${
+          this.selectedPhType
+        }`
+      )
+      .then(response => {
+        this.SearchResultList = response.data;
+        //console.log(`Search result: ${this.SearchResultList}`);
+        for (let i = 0; i < this.SearchResultList.length; i++) {
+          //console.log(this.SearchResultList[i]);
+        }
+        this.done = true;
+        this.isLoading = false;
+      })
+      .catch(e => {
+        //console.log(e);
+      });
+  }
 }
 </script>
 
@@ -388,15 +442,15 @@ export default class Search extends Vue {
   top: 50%;
   height: 100%;
   width: auto;
-  -webkit-transform: translate(-50%,-50%);
-      -ms-transform: translate(-50%,-50%);
-          transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 .thumbnail img.portrait {
   width: 100%;
   height: auto;
 }
-.row{
+.row {
   display: flex;
   flex-wrap: wrap;
   margin-right: -15px;
@@ -406,9 +460,9 @@ export default class Search extends Vue {
 /*------------------------*/
 
 img {
-    width:200px;
-    height:200px;
-    object-fit: cover;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 
 .img__wrap {
@@ -432,7 +486,7 @@ img {
   justify-content: center;
 
   /* transition effect. not necessary */
-  transition: opacity .2s, visibility .2s;
+  transition: opacity 0.2s, visibility 0.2s;
 }
 
 .img__wrap:hover .img__description_layer {
@@ -441,7 +495,7 @@ img {
 }
 
 .img__description {
-  transition: .2s;
+  transition: 0.2s;
   transform: translateY(1em);
 }
 

@@ -1,6 +1,5 @@
 export interface PhotoToUpload {
-    name: string;
-    pType: any;
-    pFile: any;
-  }
-  
+  name: string;
+  pType: any;
+  pFile: any;
+}

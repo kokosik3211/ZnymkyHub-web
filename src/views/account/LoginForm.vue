@@ -1,7 +1,7 @@
 <template>
   <section class="hero">
-    <br>
-    <br>
+    <br />
+    <br />
     <div class="hero-body has-background-light">
       <div class="container has-text-centered">
         <h3 class="has-text-grey is-size-4">Login</h3>
@@ -12,24 +12,35 @@
             with your password to continue.
           </div>
         </article>
-        <br>
+        <br />
         <div class="columns">
           <div class="column is-4 is-offset-4">
             <div class="box">
               <form @submit.prevent="handleSubmit">
                 <div class="field">
                   <div class="control has-icons-left">
-                    <input class="input" type="email" placeholder="Email" autofocus="" v-model="credentials.userName"/>
+                    <input
+                      class="input"
+                      type="email"
+                      placeholder="Email"
+                      autofocus=""
+                      v-model="credentials.userName"
+                    />
                     <span class="icon is-small is-left">
-                        <i class="fas fa-user"></i>
+                      <i class="fas fa-user"></i>
                     </span>
                   </div>
                 </div>
                 <div class="field">
                   <div class="control has-icons-left">
-                    <input class="input" type="password" placeholder="Password" v-model="credentials.password"/>
+                    <input
+                      class="input"
+                      type="password"
+                      placeholder="Password"
+                      v-model="credentials.password"
+                    />
                     <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
+                      <i class="fas fa-lock"></i>
                     </span>
                   </div>
                 </div>
@@ -51,7 +62,7 @@
 
           <div class="column is-3 is-centered">
             <p style="margin-bottom: 7px;">Use social network</p>
-            <FacebookAuth/>
+            <FacebookAuth />
           </div>
         </div>
       </div>
@@ -68,7 +79,7 @@
 import Spinner from "@/components/Spinner.vue"; // @ is an alias to /src
 import { Component, Vue } from "vue-property-decorator";
 import { Credentials } from "../../models/credentials.interface";
-import FacebookAuth from "@/views/account/FacebookAuth.vue"
+import FacebookAuth from "@/views/account/FacebookAuth.vue";
 
 // this.$route.query.page
 

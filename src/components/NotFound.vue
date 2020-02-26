@@ -3,7 +3,9 @@
     <div class="container has-text-centered">
       <h1>{{ msg }}</h1>
       <h1>404</h1>
-      <router-link tag="button" class="button is-danger" to="/">Go to the main page</router-link>
+      <router-link tag="button" class="button is-danger" to="/"
+        >Go to the main page</router-link
+      >
     </div>
   </div>
 </template>

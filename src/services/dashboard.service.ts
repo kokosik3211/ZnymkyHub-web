@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BaseService } from "./base.service";
 
+const auth = {headers: { Authorization: "bearer " + localStorage.getItem("auth-token")}};
 class DashboardService extends BaseService {
   private static instance: DashboardService;
 
@@ -14,7 +15,7 @@ class DashboardService extends BaseService {
   }
 
   public getHomeDetails(): Promise<any> {
-    return axios.get(`${this.api}/dashboard/home`);
+    return axios.get(`${this.api}/dashboard/home`, auth);
   }
 }
 

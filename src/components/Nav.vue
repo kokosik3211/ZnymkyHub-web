@@ -1,76 +1,103 @@
 <template>
-<nav class="navbar is-dark">
-  <div class="container">
-  <div class="navbar-brand">
-    <router-link to="/" class="navbar-item">
-      <!-- <img src="https://bulma.io/images/bulma-logo.png" alt="znymkyhub" width="112" height="28"> -->
-      <img src="../assets/img/photos.png" alt="znymkyhub" height="28">
-    </router-link>
-    <div class="navbar-burger burger" data-target="navbarExampleTransparentExample" @click="showNav = !showNav" :class="{ 'is-active': showNav }">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </div>
-
-  <div id="navbarExampleTransparentExample" class="navbar-menu" :class="{ 'is-active': showNav }">
-    <div class="navbar-start">
-      <router-link to="/" class="navbar-item">Home</router-link>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="#">
-          Photographers
-        </a>
-        <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="">
-            Top rated
-          </a>
-          <a class="navbar-item" href="">
-            Recently updated
-          </a>
-          <router-link to="/search" class="navbar-item" href="">
-            Search
-          </router-link>
-          <hr class="navbar-divider">
-          <a class="navbar-item is-active" href="">
-            Favourites
-          </a>
+  <nav class="navbar is-dark">
+    <div class="container">
+      <div class="navbar-brand">
+        <router-link to="/" class="navbar-item">
+          <!-- <img src="https://bulma.io/images/bulma-logo.png" alt="znymkyhub" width="112" height="28"> -->
+          <img src="../assets/img/photos.png" alt="znymkyhub" height="28" />
+        </router-link>
+        <div
+          class="navbar-burger burger"
+          data-target="navbarExampleTransparentExample"
+          @click="showNav = !showNav"
+          :class="{ 'is-active': showNav }"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
 
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link" href="#">
-          Photos
-        </a>
-        <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="">
-            Best of the week
-          </a>
-          <a class="navbar-item" href="">
-            Best of the year
-          </a>
-          <a class="navbar-item" href="">
-            Fresh
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item" href="">
-            Faves feeds
-          </a>
-          <a class="navbar-item is-active" href="">
-            Favourites
-          </a>
-        </div>
-      </div>
-    </div>
+      <div
+        id="navbarExampleTransparentExample"
+        class="navbar-menu"
+        :class="{ 'is-active': showNav }"
+      >
+        <div class="navbar-start">
+          <router-link to="/" class="navbar-item">Home</router-link>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link" href="#">
+              Photographers
+            </a>
+            <div class="navbar-dropdown is-boxed">
+              <a class="navbar-item" href="">
+                Top rated
+              </a>
+              <a class="navbar-item" href="">
+                Recently updated
+              </a>
+              <router-link to="/search" class="navbar-item" href="">
+                Search
+              </router-link>
+              <hr class="navbar-divider" />
+              <a class="navbar-item is-active" href="">
+                Favourites
+              </a>
+            </div>
+          </div>
 
-    <div class="navbar-end">
-      <router-link to="/dashboard/home" class="navbar-item" v-show="isAuthenticated">Dashboard</router-link>
-      <a class="navbar-item" href="javascript:void(0)" v-on:click="logoff" v-show="isAuthenticated">Logoff {{ profile.firstName }}</a>
-      
-      <router-link to="/register" class="navbar-item" v-show="!isAuthenticated">Sign up</router-link>
-      <router-link to="/login" class="navbar-item" v-show="!isAuthenticated">Sign in</router-link>
-      <!-- <router-link to="/facebook-login" class="navbar-item" v-show="!isAuthenticated">Facebook signup/login</router-link> -->
-        
-      <!-- <div class="navbar-item">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link" href="#">
+              Photos
+            </a>
+            <div class="navbar-dropdown is-boxed">
+              <a class="navbar-item" href="">
+                Best of the week
+              </a>
+              <a class="navbar-item" href="">
+                Best of the year
+              </a>
+              <a class="navbar-item" href="">
+                Fresh
+              </a>
+              <hr class="navbar-divider" />
+              <a class="navbar-item" href="">
+                Faves feeds
+              </a>
+              <a class="navbar-item is-active" href="">
+                Favourites
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-end">
+          <router-link
+            to="/dashboard/home"
+            class="navbar-item"
+            v-show="isAuthenticated"
+            >Dashboard</router-link
+          >
+          <a
+            class="navbar-item"
+            href="javascript:void(0)"
+            v-on:click="logoff"
+            v-show="isAuthenticated"
+            >Logoff {{ profile.firstName }}</a
+          >
+
+          <router-link
+            to="/register"
+            class="navbar-item"
+            v-show="!isAuthenticated"
+            >Sign up</router-link
+          >
+          <router-link to="/login" class="navbar-item" v-show="!isAuthenticated"
+            >Sign in</router-link
+          >
+          <!-- <router-link to="/facebook-login" class="navbar-item" v-show="!isAuthenticated">Facebook signup/login</router-link> -->
+
+          <!-- <div class="navbar-item">
         <div class="field is-grouped">
           <p class="control">
             <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="http://localhost:4000" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=http://localhost:4000&amp;via=jgthms">
@@ -92,10 +119,10 @@
           </p>
         </div>
       </div> -->
+        </div>
+      </div>
     </div>
-  </div>
-  </div>
-</nav>
+  </nav>
 </template>
 
 <script lang="ts">

@@ -23,15 +23,14 @@
   <div>
     <Nav />
     <router-view />
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Nav from '@/components/Nav.vue'; // @ is an alias to /src
-import Footer from '@/components/Footer.vue';
-
+import Nav from "@/components/Nav.vue"; // @ is an alias to /src
+import Footer from "@/components/Footer.vue";
 
 @Component({
   components: {

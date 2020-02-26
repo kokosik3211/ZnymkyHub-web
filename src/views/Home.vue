@@ -28,10 +28,10 @@
       </div>
     </section>
   </div> -->
-<div>
-  <section class="hero is-dark is-fullheight-with-navbar video" style="">
-    <!-- Hero head: will stick at the top -->
-    <!-- <div class="hero-head">
+  <div>
+    <section class="hero is-dark is-fullheight-with-navbar video" style="">
+      <!-- Hero head: will stick at the top -->
+      <!-- <div class="hero-head">
        <header class="navbar">
         <div class="container">
           <div class="navbar-brand">
@@ -69,74 +69,89 @@
       </header>
     </div> -->
 
-    <div class="hero-video">
-        <video playsinline autoplay muted loop src="../assets/video/fordelete.mp4" style="object-fit: cover;">
-            <!-- <source src="vid/BGvid.webm" type="video/webm">
+      <div class="hero-video">
+        <video
+          playsinline
+          autoplay
+          muted
+          loop
+          src="../assets/video/fordelete.mp4"
+          style="object-fit: cover;"
+        >
+          <!-- <source src="vid/BGvid.webm" type="video/webm">
             <source src="vid/BGvid.mp4" type="video/mp4"> -->
         </video>
-    </div>
+      </div>
 
-    <!-- Hero content: will be in the middle -->
-    <div class="hero-body">
-      <div class="container has-text-centered">
-        <h1 class="title">
-        </h1>
-        <!-- <h2 class="subtitle">
+      <!-- Hero content: will be in the middle -->
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title"></h1>
+          <!-- <h2 class="subtitle">
           Subtitle
         </h2> -->
 
-        <div>
-          <div class="column is-two-fifths is-pulled-left has-text-centered">
-            <p class="is-size-2">I'm looking for a photographer!</p>
-            <div class="column is-three-fifths is-offset-one-fifth">
-              <router-link to="/register" class="button is-danger is-outlined is-fullwidth">Directory of photographers</router-link>
+          <div>
+            <div class="column is-two-fifths is-pulled-left has-text-centered">
+              <p class="is-size-2">I'm looking for a photographer!</p>
+              <div class="column is-three-fifths is-offset-one-fifth">
+                <router-link
+                  to="/register"
+                  class="button is-danger is-outlined is-fullwidth"
+                  >Directory of photographers</router-link
+                >
+              </div>
             </div>
-          </div>
-          <div class="column is-two-fifths is-pulled-right has-text-centered">
-            <p class="is-size-2">I'm a photographer looking for good photos :)</p>
-            <div class="column is-three-fifths is-offset-one-fifth">
-              <router-link to="/register" class="button is-danger is-outlined is-fullwidth">Join</router-link>
+            <div class="column is-two-fifths is-pulled-right has-text-centered">
+              <p class="is-size-2">
+                I'm a photographer looking for good photos :)
+              </p>
+              <div class="column is-three-fifths is-offset-one-fifth">
+                <router-link
+                  to="/register"
+                  class="button is-danger is-outlined is-fullwidth"
+                  >Join</router-link
+                >
+              </div>
             </div>
           </div>
         </div>
-        
       </div>
 
-    </div>
-
-    <!-- Hero footer: will stick at the bottom -->
-    <div class="hero-foot">
-      <nav class="tabs is-boxed is-fullwidth">
-        <div class="container">
-          <ul>
-            <li><a @click="scrollMeTo('photographers')">Photographers</a></li>
-            <li><a @click="scrollMeTo('photos')">Best photos</a></li>
-            <li><a @click="scrollMeTo('phsearch')">Photographer search</a></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </section>
-  <main>
-    <!-- <avatar v-if="user.fullName" :username=user.fullName :src=user.photo></avatar>
+      <!-- Hero footer: will stick at the bottom -->
+      <div class="hero-foot">
+        <nav class="tabs is-boxed is-fullwidth">
+          <div class="container">
+            <ul>
+              <li><a @click="scrollMeTo('photographers')">Photographers</a></li>
+              <li><a @click="scrollMeTo('photos')">Best photos</a></li>
+              <li>
+                <a @click="scrollMeTo('phsearch')">Photographer search</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </section>
+    <main>
+      <!-- <avatar v-if="user.fullName" :username=user.fullName :src=user.photo></avatar>
     <button v-on:click="test">Kek</button> -->
-  </main>
-  <PhotographersForMain id="photographers"/>
-  <PhotosForMain id="photos"/>
-  <SearchingPhotographerForMain id="phsearch"/>
-</div>
+    </main>
+    <PhotographersForMain id="photographers" />
+    <PhotosForMain id="photos" />
+    <SearchingPhotographerForMain id="phsearch" />
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Nav from '@/components/Nav.vue'; 
-import Avatar from 'vue-avatar/src/Avatar.vue';
-import PhotographersForMain from '@/components/PhotographersForMain.vue';
-import PhotosForMain from '@/components/PhotosForMain.vue';
-import SearchingPhotographerForMain from '@/components/SearchingPhotographerForMain.vue';
+import Nav from "@/components/Nav.vue";
+import Avatar from "vue-avatar/src/Avatar.vue";
+import PhotographersForMain from "@/components/PhotographersForMain.vue";
+import PhotosForMain from "@/components/PhotosForMain.vue";
+import SearchingPhotographerForMain from "@/components/SearchingPhotographerForMain.vue";
 import { User } from "../models/user.interface";
 import axios from "axios";
-
 
 @Component({
   components: {
@@ -149,7 +164,7 @@ import axios from "axios";
 })
 export default class Home extends Vue {
   private user = {} as User;
-  mounted(){
+  mounted() {
     // axios.post("http://localhost:5000/api/user/getuser").then(response => {
     //         console.log(response.data);
     //         this.user = response.data;
@@ -184,7 +199,9 @@ export default class Home extends Vue {
 </script>
 
 <style scoped>
-.hero{
-  background:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/img/poster.jpg') center no-repeat;background-size: cover;
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("../assets/img/poster.jpg") center no-repeat;
+  background-size: cover;
 }
 </style>

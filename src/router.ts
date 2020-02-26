@@ -45,7 +45,7 @@ const router = new Router({
     {
       path: "/search/:selectedCity?/:selectedPhType?",
       name: "searchForm",
-      component: SearchForm,
+      component: SearchForm
     },
     {
       path: "/dashboard",
