@@ -39,6 +39,9 @@
               <router-link to="/search" class="navbar-item" href="">
                 Search
               </router-link>
+              <router-link to="/forum" class="navbar-item" href="">
+                Forum
+              </router-link>
               <hr class="navbar-divider" />
               <a class="navbar-item is-active" href="">
                 Favourites

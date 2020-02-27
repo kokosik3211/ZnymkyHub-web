@@ -6,6 +6,7 @@ import "./assets/sass/main.scss";
 import axios from "axios";
 import Buefy from "buefy";
 import "@mdi/font/css/materialdesignicons.css";
+import $ from "jquery";
 
 Vue.use(Buefy, {
   defaultIconPack: "mdi"

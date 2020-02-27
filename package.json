@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "@mdi/font": "^3.9.97",
+    "@microsoft/signalr": "^3.1.2",
+    "@types/jquery": "^3.3.33",
     "@vue/cli-plugin-babel": "^3.12.1",
     "@vue/cli-plugin-eslint": "^3.12.1",
     "@vue/cli-plugin-typescript": "^3.12.1",

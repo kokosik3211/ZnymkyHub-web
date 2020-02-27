@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="content has-text-centered">
-      <p><strong>ZnymkyHub</strong> by <a href="#"> Volodymyr Lysyshyn</a></p>
+      <p><strong>ZnymkyHub</strong> by <a href="#"> Valentyna Romanchuk</a></p>
     </div>
   </footer>
 </template>

@@ -8,6 +8,7 @@ import SearchForm from "./views/Search.vue";
 import DashboardRoot from "./views/dashboard/Root.vue";
 import DashboardHome from "./views/dashboard/Home.vue";
 import store from "./store/store";
+import Forum from "./views/Forum.vue";
 
 Vue.use(Router);
 
@@ -46,6 +47,11 @@ const router = new Router({
       path: "/search/:selectedCity?/:selectedPhType?",
       name: "searchForm",
       component: SearchForm
+    },
+    {
+      path: "/forum",
+      name: "forum",
+      component: Forum
     },
     {
       path: "/dashboard",
