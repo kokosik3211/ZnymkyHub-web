@@ -8,7 +8,8 @@ import SearchForm from "./views/Search.vue";
 import DashboardRoot from "./views/dashboard/Root.vue";
 import DashboardHome from "./views/dashboard/Home.vue";
 import store from "./store/store";
-import Forum from "./views/Forum.vue";
+import Forum from "./views/Forum1.vue";
+import QuestionPage from "./views/Question.vue";
 
 Vue.use(Router);
 
@@ -52,6 +53,11 @@ const router = new Router({
       path: "/forum",
       name: "forum",
       component: Forum
+    },
+    {
+      path: "/question/:id",
+      name: "question",
+      component: QuestionPage
     },
     {
       path: "/dashboard",

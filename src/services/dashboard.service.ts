@@ -1,7 +1,9 @@
 import axios from "axios";
 import { BaseService } from "./base.service";
 
-const auth = {headers: { Authorization: "bearer " + localStorage.getItem("auth-token")}};
+const auth = {
+  headers: { Authorization: "bearer " + localStorage.getItem("auth-token") }
+};
 class DashboardService extends BaseService {
   private static instance: DashboardService;
 

@@ -7,12 +7,24 @@ import axios from "axios";
 import Buefy from "buefy";
 import "@mdi/font/css/materialdesignicons.css";
 import $ from "jquery";
+import BootstrapVue from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+import "@fortawesome/fontawesome-free/css/all.css";
+import QuestionHub from "./question-hub";
 
 Vue.use(Buefy, {
   defaultIconPack: "mdi"
 });
 
+Vue.use(BootstrapVue);
+Vue.use(QuestionHub);
+
 Vue.config.productionTip = false;
+
+axios.defaults.baseURL = "http://localhost:5000";
+
+Vue.prototype.$http = axios;
 
 new Vue({
   router,

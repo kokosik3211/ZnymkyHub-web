@@ -152,6 +152,7 @@ import PhotosForMain from "@/components/PhotosForMain.vue";
 import SearchingPhotographerForMain from "@/components/SearchingPhotographerForMain.vue";
 import { User } from "../models/user.interface";
 import axios from "axios";
+import * as signalR from "@microsoft/signalr";
 
 @Component({
   components: {
@@ -164,6 +165,7 @@ import axios from "axios";
 })
 export default class Home extends Vue {
   private user = {} as User;
+
   mounted() {
     // axios.post("http://localhost:5000/api/user/getuser").then(response => {
     //         console.log(response.data);
