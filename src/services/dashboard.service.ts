@@ -19,6 +19,10 @@ class DashboardService extends BaseService {
   public getHomeDetails(): Promise<any> {
     return axios.get(`${this.api}/dashboard/home`, auth);
   }
+
+  public getUserProfileDetails(id: any): Promise<any> {
+    return axios.get(`${this.api}/profile/getuserprofileinfo`, { params: { id: id }});
+  }
 }
 
 // export a singleton instance in the global namespace

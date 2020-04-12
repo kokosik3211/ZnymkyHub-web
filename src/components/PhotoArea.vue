@@ -5,7 +5,7 @@
       :active.sync="isLoading"
       :can-cancel="true"
     ></b-loading>
-    <div class="columns is-multiline is-centered">
+    <div v-if="Photos.length" class="columns is-multiline is-centered">
       <!-- <ul id="lightgallery" class="list-unstyled row">
             <li class="column" data-src="https://images.unsplash.com/photo-1549417338-6f137ab2cd20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"  data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
               <a href="">
@@ -61,6 +61,15 @@
             </a>
         </div> -->
     </div>
+    <section v-else class="hero is-medium is-light is-bold rounded-corners">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title has-text-centered">
+            Sorry, no photos yet 😥
+          </h1>
+        </div>
+      </div>
+    </section>
     <hr />
     <b-pagination
       :total="total"
@@ -282,4 +291,8 @@ img {
   width: 50%;
   background-color: powderblue;
 } */
+
+.rounded-corners {
+  border-radius: 20px 40px;
+}
 </style>

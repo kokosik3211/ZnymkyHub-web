@@ -19,14 +19,14 @@
               class="column"
               style="text-align: center; padding: 27px;"
             >
-              <div>
+              <a @click="onOpenProfile(photographer.id)">
                 <avatar
                   :size="100"
                   :username="photographer.fullName"
                   :src="photographer.photo"
                   style="display: inline-block;"
                 ></avatar>
-              </div>
+              </a>
               <p class="is-size-7" style="margin-top: 7px;">
                 {{ photographer.fullName }}
               </p>
@@ -75,6 +75,10 @@ export default class PhotographersForMain extends Vue {
         this.PhotographersCount = response.data;
         //console.log(`Photographers count = ${this.PhotographersCount}`);
       });
+  }
+
+  onOpenProfile(id: any) {
+      this.$router.push({ name: "profile", params: { id: id } });
   }
 }
 </script>

@@ -10,6 +10,7 @@ import DashboardHome from "./views/dashboard/Home.vue";
 import store from "./store/store";
 import Forum from "./views/Forum1.vue";
 import QuestionPage from "./views/Question.vue";
+import Profile from "./views/Profile.vue";
 
 Vue.use(Router);
 
@@ -58,6 +59,11 @@ const router = new Router({
       path: "/question/:id",
       name: "question",
       component: QuestionPage
+    },
+    {
+      path: "/profile/:id",
+      name: "profile",
+      component: Profile
     },
     {
       path: "/dashboard",
