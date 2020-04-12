@@ -30,10 +30,15 @@
 import VueMarkdown from "vue-markdown";
 import QuestionScore from "@/components/question-score";
 
+import { VBTooltip } from "bootstrap-vue";
+
 export default {
   components: {
     VueMarkdown,
     QuestionScore
+  },
+  directives: {
+    "b-tooltip": VBTooltip
   },
   props: {
     question: {
@@ -61,3 +66,9 @@ export default {
   }
 };
 </script>
+
+<style src="../../node_modules/bootstrap/dist/css/bootstrap.css" scoped></style>
+<style
+  src="../../node_modules/bootstrap-vue/dist/bootstrap-vue.css"
+  scoped
+></style>

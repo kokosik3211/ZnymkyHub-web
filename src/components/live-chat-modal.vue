@@ -1,49 +1,61 @@
 <template>
-  <b-modal
-    id="liveChatModal"
-    ref="liveChatModal"
-    hide-footer
-    title="Live Chat"
-    size="lg"
-    @hidden="onHidden"
-  >
-    <div class="bg-light messages-container">
-      <ul v-if="messages.length" class="list-unstyled container">
-        <li v-for="(message, index) in messages" :key="index" class="row my-2">
-          <span class="col-3">{{
-            message.username === profile.name ? "You" : message.username
-          }}</span>
-          <vue-markdown
-            :class="{
-              'col-9': true,
-              'text-muted': message.username === profile.name
-            }"
-            :source="message.text"
-          />
-        </li>
-      </ul>
-      <p v-else class="text-muted text-center">
-        Welcome to the chat...<br />
-        Say hi!
-      </p>
-    </div>
+  <div class="modal-card" style="width: auto">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Live Chat</p>
+    </header>
+    <section class="modal-card-body">
+      <div class="messages-container">
+        <ul v-if="messages.length">
+          <li v-for="(message, index) in messages" :key="index" class="columns">
+            <span class="column is-3">{{
+              message.username === profile.email ? "You" : message.username
+            }}</span>
+            <vue-markdown
+              :class="{
+                column: true,
+                'has-text-primary': message.username === profile.email
+              }"
+              :source="message.text"
+            />
+          </li>
+        </ul>
+        <section
+          v-else
+          class="hero is-warning is-medium is-bold rounded-corners has-margin-top-50"
+        >
+          <div class="hero-body">
+            <div class="container">
+              <h1 class="title">
+                Welcome to the chat...
+              </h1>
+              <h2 class="subtitle">
+                Say hi!
+              </h2>
+            </div>
+          </div>
+        </section>
+      </div>
 
-    <b-form class="border-top mt-2 pt-2" @submit.prevent="onSendMessage">
-      <b-form-group label="Your message:" label-for="messageInput">
-        <b-form-textarea
-          id="messageInput"
+      <div class="is-divider"></div>
+
+      <b-field
+        label="Your message:"
+        message="Note: use markdown to format your message."
+      >
+        <b-input
           v-model="form.message"
           placeholder="What do you have to say?"
-          :rows="2"
-          :max-rows="10"
+          type="textarea"
         >
-        </b-form-textarea>
-      </b-form-group>
-      <button class="btn btn-primary float-right ml-2" type="submit">
-        Send
+        </b-input>
+      </b-field>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-primary" type="button" @click="onSendMessage()">
+        Sent
       </button>
-    </b-form>
-  </b-modal>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -78,10 +90,15 @@ export default {
   methods: {
     onMessageReceived({ username, text }) {
       this.messages = [...this.messages, { username, text }];
+      setTimeout(this.scrollToBottom, 100);
     },
     onSendMessage(evt) {
       this.$questionHub.sendMessage(this.form.message);
       this.form.message = "";
+    },
+    scrollToBottom() {
+      var messagesContainer = $(".messages-container")[0];
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
     },
     onHidden() {
       Object.assign(this.form, {
@@ -94,7 +111,10 @@ export default {
 
 <style scoped>
 .messages-container {
-  max-height: 450px;
-  overflow-y: auto;
+  height: 450px;
+  overflow-y: scroll;
+}
+.rounded-corners {
+  border-radius: 20px 40px;
 }
 </style>

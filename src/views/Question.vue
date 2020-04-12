@@ -1,5 +1,5 @@
 <template>
-  <article class="container" v-if="question">
+  <article class="container has-margin-top-20" v-if="question">
     <header class="row align-items-center">
       <question-score :question="question" class="col-1" />
       <h3 class="col-8">{{ question.title }}</h3>
@@ -18,22 +18,28 @@
         <p class="col-3">{{ answer.createdBy }}</p>
       </li>
     </ul>
-    <footer>
+
+    <div class="is-divider"></div>
+
+    <b-field class="has-margin-bottom-10">
+      <b-modal :active.sync="isAddAnswerModalActive" :width="640">
+        <add-answer-modal
+          :question-id="this.questionId"
+          @answer-added="onAnswerAdded"
+        >
+        </add-answer-modal>
+      </b-modal>
       <button
         class="btn btn-primary float-right"
-        v-b-modal.addAnswerModal
         :disabled="!isAuthenticated"
+        @click="isAddAnswerModalActive = true"
       >
         <i class="fas fa-edit" /> Post your Answer
       </button>
       <button class="btn btn-link float-right" @click="onReturnHome">
         Back to list
       </button>
-    </footer>
-    <add-answer-modal
-      :question-id="this.questionId"
-      @answer-added="onAnswerAdded"
-    />
+    </b-field>
   </article>
 </template>
 
@@ -53,7 +59,8 @@ export default {
     return {
       question: null,
       answers: [],
-      questionId: this.$route.params.id
+      questionId: this.$route.params.id,
+      isAddAnswerModalActive: false
     };
   },
   computed: {
@@ -93,3 +100,9 @@ export default {
   }
 };
 </script>
+
+<style src="../../node_modules/bootstrap/dist/css/bootstrap.css" scoped></style>
+<style
+  src="../../node_modules/bootstrap-vue/dist/bootstrap-vue.css"
+  scoped
+></style>

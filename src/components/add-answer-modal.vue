@@ -1,29 +1,32 @@
 <template>
-  <b-modal
-    id="addAnswerModal"
-    ref="addAnswerModal"
-    hide-footer
-    title="Add new Answer"
-    @hidden="onHidden"
-  >
-    <b-form @submit.prevent="onSubmit" @reset.prevent="onCancel">
-      <b-form-group label="Your Answer:" label-for="answerInput">
-        <b-form-textarea
-          id="answerInput"
-          v-model="form.body"
-          placeholder="Provide an answer"
-          :rows="6"
-          :max-rows="10"
+  <form action="">
+    <div class="modal-card" style="width: auto">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Add new answer</p>
+      </header>
+      <section class="modal-card-body">
+        <b-field
+          label="Your answer:"
+          message="Note: use markdown to format your answer."
         >
-        </b-form-textarea>
-      </b-form-group>
-
-      <button class="btn btn-primary float-right ml-2" type="submit">
-        Submit
-      </button>
-      <button class="btn btn-secondary float-right" type="reset">Cancel</button>
-    </b-form>
-  </b-modal>
+          <b-input
+            v-model="form.body"
+            placeholder="Provide an answer"
+            type="textarea"
+          >
+          </b-input>
+        </b-field>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" type="button" @click="$parent.close()">
+          Close
+        </button>
+        <button class="button is-primary" type="button" @click="onSubmit()">
+          Submit
+        </button>
+      </footer>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -43,16 +46,13 @@ export default {
     };
   },
   methods: {
-    onSubmit(evt) {
+    onSubmit() {
       this.$http
         .post(`api/question/${this.questionId}/answer`, this.form)
         .then(res => {
           this.$emit("answer-added", res.data);
-          this.$refs.addAnswerModal.hide();
+          this.$parent.close();
         });
-    },
-    onCancel(evt) {
-      this.$refs.addAnswerModal.hide();
     },
     onHidden() {
       Object.assign(this.form, {

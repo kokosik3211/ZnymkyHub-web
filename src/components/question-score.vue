@@ -63,12 +63,11 @@ export default {
 };
 </script>
 
-<style scoped>
-.scoring .btn-link {
-  line-height: 1;
-}
-</style>
-
+<style src="../../node_modules/bootstrap/dist/css/bootstrap.css" scoped></style>
+<style
+  src="../../node_modules/bootstrap-vue/dist/bootstrap-vue.css"
+  scoped
+></style>
 <style scoped>
 .scoring .btn-link {
   line-height: 1;

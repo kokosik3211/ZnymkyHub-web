@@ -28,13 +28,11 @@ import { mapGetters } from "vuex";
 export default class Chat extends Vue {
   private user = {} as User;
   mounted() {
-    //debugger; // eslint-disable-line
     const connection = new signalR.HubConnectionBuilder()
       .withUrl("http://localhost:5000/forum")
       .build();
 
     connection.on("Send", function(data) {
-      //debugger; // eslint-disable-line
       let elem = document.createElement("p");
       elem.appendChild(document.createTextNode(data));
       let fo = document.getElementById("chatroom");
@@ -45,7 +43,6 @@ export default class Chat extends Vue {
     });
 
     $("#sendBtn").click(function(e) {
-      //debugger; // eslint-disable-line
       let message = $("#message").val();
       $("#message").val("");
       connection.invoke("Send", message);

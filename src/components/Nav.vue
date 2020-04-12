@@ -147,6 +147,10 @@ export default class Nav extends Vue {
     });
   }
   private created() {
+    if (localStorage.getItem("auth-token")) {
+      this.$store.dispatch("user/userRequest", null, { root: true });
+    }
+
     EventBus.$on("logged-in", (payLoad: any) => {
       // this doesn't currently do anything in this demo but does get fired on successful login.
       // leaving it here to show how to allow communication between unrelated components - ie. Store -> Component

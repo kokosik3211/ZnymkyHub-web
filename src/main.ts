@@ -5,19 +5,18 @@ import store from "./store/store";
 import "./assets/sass/main.scss";
 import axios from "axios";
 import Buefy from "buefy";
+import "buefy/dist/buefy.css";
+import "bulma-extensions/dist/css/bulma-extensions.min.css";
 import "@mdi/font/css/materialdesignicons.css";
 import $ from "jquery";
-import BootstrapVue from "bootstrap-vue";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 import QuestionHub from "./question-hub";
+import "bulma-helpers/css/bulma-helpers.min.css";
 
 Vue.use(Buefy, {
   defaultIconPack: "mdi"
 });
 
-Vue.use(BootstrapVue);
 Vue.use(QuestionHub);
 
 Vue.config.productionTip = false;

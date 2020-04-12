@@ -14,7 +14,6 @@ export default {
     let manuallyClosed = false;
 
     Vue.prototype.startSignalR = (jwtToken: any) => {
-      debugger; // eslint-disable-line
       connection = new signalR.HubConnectionBuilder()
         .withUrl("http://localhost:5000/question-hub", {
           accessTokenFactory: () => jwtToken
@@ -52,12 +51,10 @@ export default {
         startedPromise = connection
           .start()
           .then(() => {
-            debugger; // eslint-disable-line
             console.log('Chat Connection started.'); // eslint-disable-line
-            console.log('Now connected, connection ID=' + connection.id); // eslint-disable-line
+            console.log('Now connected, connection ID=' + connection.connectionId); // eslint-disable-line
           })
           .catch((err: any) => {
-            debugger; // eslint-disable-line
             console.error('Failed to connect with hub', err) // eslint-disable-line
             return new Promise((resolve, reject) =>
               setTimeout(

@@ -1,23 +1,23 @@
 <template>
-  <div>
+  <div class="container has-margin-top-20">
     <h1>
-      This totally looks like Stack Overflow
+      Znymky Hub forum
       <button
-        v-b-modal.addQuestionModal
         :disabled="!isAuthenticated"
         class="btn btn-primary mt-2 float-right"
+        @click="isAddQuestionModalActive = true"
       >
         <i class="fas fa-plus" /> Ask a question
       </button>
       <button
-        v-b-modal.liveChatModal
         :disabled="!isAuthenticated"
         class="btn btn-secondary mt-2 mr-2 float-right"
+        @click="isLiveChatModalActive = true"
       >
         <i class="fas fa-comments" /> Live chat
       </button>
     </h1>
-    <ul class="list-group question-previews mt-4">
+    <ul v-if="questions.length" class="list-group question-previews mt-4">
       <question-preview
         v-for="question in questions"
         :key="question.id"
@@ -25,8 +25,27 @@
         class="list-group-item mb-3"
       />
     </ul>
-    <add-question-modal @question-added="onQuestionAdded" />
-    <live-chat-modal />
+    <section
+      v-else
+      class="hero is-medium is-primary is-bold rounded-corners has-margin-top-15 has-margin-bottom-20"
+    >
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Welcome to the forum...
+          </h1>
+          <h2 class="subtitle">
+            Ask first question!
+          </h2>
+        </div>
+      </div>
+    </section>
+    <b-modal :active.sync="isAddQuestionModalActive" :width="640">
+      <add-question-modal @question-added="onQuestionAdded" />
+    </b-modal>
+    <b-modal :active.sync="isLiveChatModalActive" :width="700">
+      <live-chat-modal />
+    </b-modal>
   </div>
 </template>
 
@@ -45,7 +64,9 @@ export default {
   },
   data() {
     return {
-      questions: []
+      questions: [],
+      isAddQuestionModalActive: false,
+      isLiveChatModalActive: false
     };
   },
   computed: {
@@ -56,14 +77,13 @@ export default {
     })
   },
   created() {
-    debugger; // eslint-disable-line
     if (this.isAuthenticated) {
       Vue.prototype.startSignalR(this.token);
       this.$questionHub.$on("question-added", this.onQuestionAdded);
-      this.$http.get("/api/question").then(res => {
-        this.questions = res.data;
-      });
     }
+    this.$http.get("/api/question").then(res => {
+      this.questions = res.data;
+    });
   },
   beforeDestroy() {
     // Make sure to cleanup SignalR event handlers when removing the component
@@ -71,7 +91,6 @@ export default {
   },
   methods: {
     onQuestionAdded(question) {
-      debugger; // eslint-disable-line
       // make sure the question doesnt exist yet (as it will also arrive through signalR!)
       if (this.questions.some(q => q.id === question.id)) return;
       this.questions = [question, ...this.questions];
@@ -79,3 +98,14 @@ export default {
   }
 };
 </script>
+
+<style src="../../node_modules/bootstrap/dist/css/bootstrap.css" scoped></style>
+<style
+  src="../../node_modules/bootstrap-vue/dist/bootstrap-vue.css"
+  scoped
+></style>
+<style scoped>
+.rounded-corners {
+  border-radius: 20px 40px;
+}
+</style>
