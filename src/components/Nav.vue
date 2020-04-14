@@ -79,7 +79,7 @@
             to="/dashboard/home"
             class="navbar-item"
             v-show="isAuthenticated"
-            >Dashboard</router-link
+            ><i class="fas fa-user-circle has-margin-right-5"></i>Dashboard</router-link
           >
           <a
             class="navbar-item"

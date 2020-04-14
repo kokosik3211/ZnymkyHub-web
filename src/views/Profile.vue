@@ -62,7 +62,7 @@
         </div>
       </div>
     </section>
-    <PhotoArea v-if="homeData.id" :id="homeData.id" />
+    <PhotoArea v-if="homeData.id" :id="homeData.id" :phName="name" :phInstagram="homeData.instagramUrl"/>
   </div>
 </template>
 

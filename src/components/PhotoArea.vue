@@ -33,11 +33,12 @@
                     </a>
                 </li>
           </ul> -->
-      <div
+      <a
         v-for="photo in Photos"
         :key="photo.id"
         class="column"
         style="text-align: center; padding: 27px;"
+        @click="onImageSelected(photo.id)"
       >
         <div style="display: inline-block;">
           <div class="img__wrap" style="display: inline-block;">
@@ -53,7 +54,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </a>
 
       <!-- <div id="lightgallery">
             <a v-for="(photo) in Photos" :key="photo" :data-src="photo">
@@ -70,6 +71,9 @@
         </div>
       </div>
     </section>
+    <b-modal :active.sync="isImageViewerModalActive" :width="700">
+      <image-viewer-modal :imageId="this.selectedImage" :phName="phName" :phInstagram="phInstagram"/>
+    </b-modal>
     <hr />
     <b-pagination
       :total="total"
@@ -98,18 +102,30 @@ import { Photo } from "../models/photo.interface";
 import "lightgallery.js";
 import "lightgallery.js/dist/css/lightgallery.css";
 //import "@/assets/css/bootstrap.min.css";
+import ImageViewerModal from "@/components/image-viewer-modal.vue"
 
 @Component({
   computed: mapGetters({
     profile: "user/profile"
   }),
   components: {
-    Spinner
+    Spinner,
+    ImageViewerModal
   }
 })
 export default class PhotoArea extends Vue {
   @Prop()
   id!: number;
+
+  @Prop()
+  phName!: string;
+
+  @Prop()
+  phInstagram!: string;
+
+  //Image viewer modal
+  private isImageViewerModalActive: Boolean = false;
+  private selectedImage: Number = 0;
 
   // Photos
   private Photos: Photo[] = [];
@@ -203,6 +219,11 @@ export default class PhotoArea extends Vue {
     //     $('#lightgallery').lightGallery({
     //     selector: '.item'
     // });
+  }
+
+  onImageSelected(imageId: Number) {
+    this.selectedImage = imageId;
+    this.isImageViewerModalActive = true;
   }
 }
 </script>

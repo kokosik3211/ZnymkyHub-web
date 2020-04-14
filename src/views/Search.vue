@@ -195,14 +195,14 @@
           </div>
           <div class="columns is-vcentered">
             <div class="column is-2" style="text-align: center;">
-              <div>
+              <a @click="onOpenProfile(result.id)">
                 <avatar
                   :size="150"
                   :username="result.fullName"
                   :src="result.base64"
                   style="display: inline-block;"
                 ></avatar>
-              </div>
+              </a>
               <p class="is-size-7" style="margin-top: 7px;">
                 {{ result.fullName }}
               </p>
@@ -425,6 +425,10 @@ export default class Search extends Vue {
       .catch(e => {
         //console.log(e);
       });
+  }
+
+  onOpenProfile(id: any) {
+      this.$router.push({ name: "profile", params: { id: id } });
   }
 }
 </script>

@@ -102,9 +102,13 @@
                     </div>
                 </b-dropdown-item>
             </b-dropdown> -->
+              
+              <div class="has-margin-bottom-30">
+                <b-button class="button is-dark has-width-150" outlined><i class="fas fa-chart-bar"></i> Statistic</b-button>
+              </div>
 
               <b-dropdown hoverable aria-role="list">
-                <button class="button is-primary" slot="trigger">
+                <button class="button is-primary has-width-150" slot="trigger">
                   <span><i class="fas fa-upload"></i> Upload</span>
                   <b-icon icon="menu-down"></b-icon>
                 </button>
@@ -137,7 +141,7 @@
         </div>
       </div>
     </section>
-    <PhotoArea v-if="homeData.id" :id="homeData.id" />
+    <PhotoArea v-if="homeData.id" :id="homeData.id" :phName="name" :phInstagram="homeData.instagramUrl"/>
   </div>
 </template>
 
