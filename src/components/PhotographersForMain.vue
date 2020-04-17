@@ -46,10 +46,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { User } from "../models/user.interface";
+import { mapGetters } from "vuex";
 import Avatar from "vue-avatar/src/Avatar.vue";
 import axios from "axios";
 
 @Component({
+  computed: mapGetters({
+    profile: "user/profile"
+  }),
   components: {
     Avatar
   }
@@ -78,7 +82,11 @@ export default class PhotographersForMain extends Vue {
   }
 
   onOpenProfile(id: any) {
+    if(this.$store.getters["user/profile"].id == id) {
+      this.$router.push("/dashboard/home");
+    } else {
       this.$router.push({ name: "profile", params: { id: id } });
+    }
   }
 }
 </script>

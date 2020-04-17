@@ -104,7 +104,11 @@
             </b-dropdown> -->
               
               <div class="has-margin-bottom-30">
-                <b-button class="button is-dark has-width-150" outlined><i class="fas fa-chart-bar"></i> Statistic</b-button>
+                <b-button class="button is-dark has-width-150" 
+                  outlined
+                  @click="onOpenStatistic()">
+                    <i class="fas fa-chart-bar"></i> Statistic
+                </b-button>
               </div>
 
               <b-dropdown hoverable aria-role="list">
@@ -141,7 +145,7 @@
         </div>
       </div>
     </section>
-    <PhotoArea v-if="homeData.id" :id="homeData.id" :phName="name" :phInstagram="homeData.instagramUrl"/>
+    <PhotoArea v-if="homeData.id && homeData.roleId == 2" :id="homeData.id" :phName="name" :phInstagram="homeData.instagramUrl"/>
   </div>
 </template>
 
@@ -224,6 +228,10 @@ export default class DashboardHome extends Vue {
       this.isBusy = false;
       this.isLoading = false;
     });
+  }
+
+  private onOpenStatistic() {
+    this.$router.push({ name: "statistic" });
   }
 
   mounted() {

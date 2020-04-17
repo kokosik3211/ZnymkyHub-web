@@ -50,6 +50,30 @@
                 </div>
 
                 <div class="field">
+                  <b-input
+                    placeholder="Birthday: month/day/year"
+                    v-cleave="masks.date"
+                    icon="cake"
+                    v-model="birthday">
+                  </b-input>
+                </div>
+
+                <b-field class="is-full-width">
+                  <b-radio-button class="is-full-width" v-model="user.gender"
+                      native-value="0"
+                      type="is-success">
+                      <b-icon pack="fas" icon="mars"></b-icon>
+                      <span>Male</span>
+                  </b-radio-button>
+
+                  <b-radio-button class="is-full-width" v-model="user.gender"
+                      native-value="1">
+                      <b-icon pack="fas" icon="venus"></b-icon>
+                      <span>Female</span>
+                  </b-radio-button>
+                </b-field>
+
+                <div class="field">
                   <p class="control has-icons-left">
                     <input
                       class="input"
@@ -92,13 +116,16 @@
                 </div>
 
                 <div class="field">
-                  <div class="control">
+                  <div class="control has-icons-left">
                     <input
                       class="input"
                       type="text"
-                      placeholder="Location"
-                      v-model="user.location"
+                      placeholder="Home town"
+                      v-model="user.homeTown"
                     />
+                    <span class="icon is-small is-left"
+                      ><i class="fas fa-home"></i
+                    ></span>
                   </div>
                 </div>
                 <Spinner v-bind:show="isBusy" />
@@ -141,13 +168,29 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import { UserRegistration } from "../../models/user.registration.interface";
 import { accountService } from "../../services/account.service";
 import FacebookAuth from "@/views/account/FacebookAuth.vue";
-
 import axios from "axios";
+// @ts-ignore
+import Cleave from 'cleave.js';
+
+const cleave = {
+    name: 'cleave',
+    bind(el: any, binding: any) {
+        const input = el.querySelector('input')
+        input._vCleave = new Cleave(input, binding.value)
+    },
+    unbind(el: any) {
+        const input = el.querySelector('input')
+        input._vCleave.destroy()
+    }
+}
 
 @Component({
   components: {
     Spinner,
     FacebookAuth
+  },
+  directives: {
+    cleave
   }
 })
 export default class RegistrationForm extends Vue {
@@ -161,6 +204,13 @@ export default class RegistrationForm extends Vue {
   // DynamicRegistration: number = 0;
 
   private image: string = "";
+  private birthday: string = ""
+  masks =  {
+      date: {
+        date: true,
+        datePattern: ['m', 'd', 'Y']
+      }
+  }
 
   created() {
     this.user.roleId = 0;
@@ -197,7 +247,6 @@ export default class RegistrationForm extends Vue {
 
   public changeRoleToPhotographer() {
     this.user.roleId = 2;
-    //console.log(this.user.roleId);
     this.visible = true;
     this.showInstagramUrl = true;
 
@@ -209,7 +258,6 @@ export default class RegistrationForm extends Vue {
 
   public changeRoleToUser() {
     this.user.roleId = 3;
-    //console.log(this.user.roleId);
     this.visible = true;
     this.showInstagramUrl = false;
 
@@ -221,6 +269,10 @@ export default class RegistrationForm extends Vue {
 
   private handleSubmit() {
     this.isBusy = true;
+    var b = new Date(this.birthday);
+    var userTimezoneOffset = b.getTimezoneOffset() * 60000;
+    this.user.birthday = new Date(b.getTime() - userTimezoneOffset);
+    this.user.gender = Number(this.user.gender);
     accountService
       .register(this.user)
       .finally(() => (this.isBusy = false))

@@ -7,4 +7,6 @@ export interface UserRegistration {
   homeTown: string;
   roleId: number;
   instagramUrl: string;
+  birthday: Date;
+  gender: number;
 }

@@ -11,6 +11,7 @@ import store from "./store/store";
 import Forum from "./views/Forum1.vue";
 import QuestionPage from "./views/Question.vue";
 import Profile from "./views/Profile.vue";
+import Statistic from "./views/dashboard/Statistic.vue";
 
 Vue.use(Router);
 
@@ -76,6 +77,12 @@ const router = new Router({
           meta: { requiresAuth: true }
         }
       ]
+    },
+    {
+      path: "/statistic",
+      name: "statistic",
+      component: Statistic,
+      meta: { requiresAuth: true }
     },
     { path: "/error", component: Error_page },
     // redirect - перенаправление в случае если существует ошибка маршрута

@@ -428,7 +428,11 @@ export default class Search extends Vue {
   }
 
   onOpenProfile(id: any) {
+    if(this.$store.getters["user/profile"].id == id) {
+      this.$router.push("/dashboard/home");
+    } else {
       this.$router.push({ name: "profile", params: { id: id } });
+    }
   }
 }
 </script>
