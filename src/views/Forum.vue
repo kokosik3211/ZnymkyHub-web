@@ -15,6 +15,7 @@ import { User } from "../models/user.interface";
 import axios from "axios";
 import * as signalR from "@microsoft/signalr";
 import { mapGetters } from "vuex";
+import { baseUrl } from "../constants";
 
 @Component({
   computed: mapGetters({
@@ -29,7 +30,7 @@ export default class Chat extends Vue {
   private user = {} as User;
   mounted() {
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:5000/forum")
+      .withUrl(`${baseUrl}/forum`)
       .build();
 
     connection.on("Send", function(data) {

@@ -6,33 +6,6 @@
       :can-cancel="true"
     ></b-loading>
     <div v-if="Photos.length" class="columns is-multiline is-centered">
-      <!-- <ul id="lightgallery" class="list-unstyled row">
-            <li class="column" data-src="https://images.unsplash.com/photo-1549417338-6f137ab2cd20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"  data-pinterest-text="Pin it1" data-tweet-text="share on twitter 1">
-              <a href="">
-                <div class="thumbnail">
-                  <img class="portrait" src="https://images.unsplash.com/photo-1549417338-6f137ab2cd20?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80" />
-                </div>
-              </a>
-            </li>
-          </ul> -->
-      <!-- <div id="lightgallery">
-            <div class="columns is-mobile is-multiline is-centered">
-                <div v-for="(photo) in Photos" :key="photo" class="column" :data-src="photo" style="text-align: center; padding: 27px;">
-                    <div>
-                        <img width="200" height="200" :src="photo" style="display: inline-block; object-fit: cover" />
-                    </div>
-                </div>
-            </div>
-          </div> -->
-      <!-- <ul id="lightgallery" class="row">
-                <li v-for="(photo) in Photos" :key="photo" data-src="" class="column" style="text-align: center; padding: 27px;">
-                    <a>
-                        <div class="thumbnail">
-                            <img :src="photo" style="display: inline-block;" />
-                        </div>
-                    </a>
-                </li>
-          </ul> -->
       <a
         v-for="photo in Photos"
         :key="photo.id"
@@ -55,12 +28,6 @@
           </div>
         </div>
       </a>
-
-      <!-- <div id="lightgallery">
-            <a v-for="(photo) in Photos" :key="photo" :data-src="photo">
-                <img :src="photo" />
-            </a>
-        </div> -->
     </div>
     <section v-else class="hero is-medium is-light is-bold rounded-corners">
       <div class="hero-body">
@@ -72,7 +39,7 @@
       </div>
     </section>
     <b-modal :active.sync="isImageViewerModalActive" :width="700">
-      <image-viewer-modal :imageId="this.selectedImage" :phName="phName" :phInstagram="phInstagram"/>
+      <image-viewer-modal :imageId="this.selectedImage"/>
     </b-modal>
     <hr />
     <b-pagination
@@ -101,8 +68,8 @@ import axios from "axios";
 import { Photo } from "../models/photo.interface";
 import "lightgallery.js";
 import "lightgallery.js/dist/css/lightgallery.css";
-//import "@/assets/css/bootstrap.min.css";
 import ImageViewerModal from "@/components/image-viewer-modal.vue"
+import { baseUrl } from "../constants";
 
 @Component({
   computed: mapGetters({
@@ -118,10 +85,7 @@ export default class PhotoArea extends Vue {
   id!: number;
 
   @Prop()
-  phName!: string;
-
-  @Prop()
-  phInstagram!: string;
+  contentType!: string; // "photos" || "saved"
 
   //Image viewer modal
   private isImageViewerModalActive: Boolean = false;
@@ -143,34 +107,71 @@ export default class PhotoArea extends Vue {
   private isSimple = false;
   private isRounded = true;
 
+  // Action names
+  private contentAction = "";
+  private paginatorAction = "";
+
   @Watch("current")
   onPropertyChanged(value: string, oldValue: string) {
     // Do stuff with the watcher here.
     //console.log(`New 'current' value = ${value}`);
     //console.log(`Old 'current' value = ${oldValue}`);
     this.isLoading = true;
-    axios
-      .post(
-        `http://localhost:5000/api/image/getphotosforphotoarea/${this.id}/${
-          this.current
-        }`
-      )
-      .then(response => {
+    axios.post(`${baseUrl}/api/image/${this.contentAction}/${this.id}/${this.current}`).then(response => {
         this.Photos = response.data;
-        //console.log(this.Photos);
         this.isLoading = false;
-      })
-      .catch(e => {
-        //console.log(e);
-      });
+      }).catch(e => {});
   }
 
   private created() {
+    if(this.contentType == "photos") {
+      this.contentAction = "getphotosforphotoarea";
+      this.paginatorAction = "getinfoforphotopaginator";
+    } else if (this.contentType == "saved") {
+      this.contentAction = "getsavedphotos";
+      this.paginatorAction = "getsavedphotospaginatorinfo";
+    } else {
+      return;
+    }
+
+    EventBus.$on('like-photo', (photoId: any) => {
+      var filtered = this.Photos.filter(function (item) {
+        return item.id == photoId;
+      });
+      $.each(filtered, function (i, v) {
+        v.numlikes++;
+      });
+    });
+    EventBus.$on('unlike-photo', (photoId: any) => {
+      var filtered = this.Photos.filter(function (item) {
+        return item.id == photoId;
+      });
+      $.each(filtered, function (i, v) {
+        v.numlikes--;
+      });
+    });
+    EventBus.$on('save-photo', (photoId: any) => {
+      var filtered = this.Photos.filter(function (item) {
+        return item.id == photoId;
+      });
+      $.each(filtered, function (i, v) {
+        v.numsaves++;
+      });
+    });
+    EventBus.$on('unsave-photo', (photoId: any) => {
+      var filtered = this.Photos.filter(function (item) {
+        return item.id == photoId;
+      });
+      $.each(filtered, function (i, v) {
+        v.numsaves--;
+      });
+    });
+
     EventBus.$on("photoAdded", () => {
       this.isLoading = true;
       axios
         .post(
-          `http://localhost:5000/api/image/getphotosforphotoarea/${this.id}/${
+          `${baseUrl}/api/image/getphotosforphotoarea/${this.id}/${
             this.current
           }`
         )
@@ -183,32 +184,15 @@ export default class PhotoArea extends Vue {
           //console.log(e);
         });
     });
-    // console.log(`PhotoArea created with id = ${this.id}`);
-    axios
-      .post(
-        `http://localhost:5000/api/image/getinfoforphotopaginator/${this.id}`
-      )
-      .then(response => {
-        this.total = response.data;
-        //console.log(`Total count of photos = ${this.total}`);
-      })
-      .catch(e => {
-        //console.log(e);
-      });
-    axios
-      .post(
-        `http://localhost:5000/api/image/getphotosforphotoarea/${this.id}/${
-          this.current
-        }`
-      )
-      .then(response => {
-        this.Photos = response.data;
-        //console.log(this.Photos);
-        this.isLoading = false;
-      })
-      .catch(e => {
-        //console.log(e);
-      });
+
+    axios.post(`${baseUrl}/api/image/${this.paginatorAction}/${this.id}`).then(response => {
+      this.total = response.data;
+    }).catch(e => {});
+
+    axios.post(`${baseUrl}/api/image/${this.contentAction}/${this.id}/${this.current}`).then(response => {
+      this.Photos = response.data;
+      this.isLoading = false;
+    }).catch(e => {});
   }
 
   mounted() {

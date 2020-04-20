@@ -23,6 +23,24 @@ class DashboardService extends BaseService {
   public getUserProfileDetails(id: any): Promise<any> {
     return axios.get(`${this.api}/profile/getuserprofileinfo`, { params: { id: id }});
   }
+
+  public addPhotographerToFavourite(photographerId: number): Promise<any> {
+    return axios.post(`${this.api}/profile/favouritephotographer`, null, {
+        headers: auth.headers,
+        params: { photographerId : photographerId }
+    });
+  }
+
+  public removePhotographerFromFavourite(photographerId: number): Promise<any> {
+    return axios.post(`${this.api}/profile/unfavouritephotographer`, null, {
+        headers: auth.headers,
+        params: { photographerId : photographerId }
+    });
+  }
+
+  public getFavouritePhotographers(): Promise<any> {
+    return axios.get(`${this.api}/dashboard/getfavouritephotographers`, auth);
+  }
 }
 
 // export a singleton instance in the global namespace

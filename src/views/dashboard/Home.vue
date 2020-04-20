@@ -69,72 +69,40 @@
               </p>
             </div>
             <div class="column is-3">
-              <!-- <b-dropdown v-model="isPublic" aria-role="list">
-                <button class="button is-primary" type="button" slot="trigger">
-                    <template v-if="isPublic">
-                        <b-icon icon="earth"></b-icon>
-                        <span>Public</span>
-                    </template>
-                    <template v-else>
-                        <b-icon icon="account-multiple"></b-icon>
-                        <span>Friends</span>
-                    </template>
+              <div v-if="homeData.roleId == 2">
+                <div class="has-margin-bottom-30">
+                  <b-button class="button is-dark has-width-150" 
+                    outlined
+                    @click="onOpenStatistic()">
+                      <i class="fas fa-chart-bar"></i> Statistic
+                  </b-button>
+                </div>
+
+                <b-dropdown hoverable aria-role="list">
+                  <button class="button is-primary has-width-150" slot="trigger">
+                    <span><i class="fas fa-upload"></i> Upload</span>
                     <b-icon icon="menu-down"></b-icon>
-                </button>
+                  </button>
 
-                <b-dropdown-item :value="true" aria-role="listitem">
-                    <div class="media">
-                        <b-icon class="media-left" icon="earth"></b-icon>
-                        <div class="media-content">
-                            <h3>Public</h3>
-                            <small>Everyone can see</small>
-                        </div>
-                    </div>
-                </b-dropdown-item>
+                  <b-dropdown-item
+                    aria-role="listitem"
+                    @click="isPhotoModalActive = true"
+                    ><i class="fas fa-image"></i> Photo</b-dropdown-item
+                  >
+                  <b-dropdown-item
+                    aria-role="listitem"
+                    @click="isPhotoshootModalActive = true"
+                    ><i class="fas fa-images"></i> Photoshoot</b-dropdown-item
+                  >
+                </b-dropdown>
 
-                <b-dropdown-item :value="false" aria-role="listitem">
-                    <div class="media">
-                        <b-icon class="media-left" icon="account-multiple"></b-icon>
-                        <div class="media-content">
-                            <h3>Friends</h3>
-                            <small>Only friends can see</small>
-                        </div>
-                    </div>
-                </b-dropdown-item>
-            </b-dropdown> -->
-              
-              <div class="has-margin-bottom-30">
-                <b-button class="button is-dark has-width-150" 
-                  outlined
-                  @click="onOpenStatistic()">
-                    <i class="fas fa-chart-bar"></i> Statistic
-                </b-button>
+                <b-modal :active.sync="isPhotoModalActive" has-modal-card>
+                  <UploadPhoto />
+                </b-modal>
+                <b-modal :active.sync="isPhotoshootModalActive" has-modal-card>
+                  <UploadPhotoshoot />
+                </b-modal>
               </div>
-
-              <b-dropdown hoverable aria-role="list">
-                <button class="button is-primary has-width-150" slot="trigger">
-                  <span><i class="fas fa-upload"></i> Upload</span>
-                  <b-icon icon="menu-down"></b-icon>
-                </button>
-
-                <b-dropdown-item
-                  aria-role="listitem"
-                  @click="isPhotoModalActive = true"
-                  ><i class="fas fa-image"></i> Photo</b-dropdown-item
-                >
-                <b-dropdown-item
-                  aria-role="listitem"
-                  @click="isPhotoshootModalActive = true"
-                  ><i class="fas fa-images"></i> Photoshoot</b-dropdown-item
-                >
-              </b-dropdown>
-
-              <b-modal :active.sync="isPhotoModalActive" has-modal-card>
-                <UploadPhoto />
-              </b-modal>
-              <b-modal :active.sync="isPhotoshootModalActive" has-modal-card>
-                <UploadPhotoshoot />
-              </b-modal>
             </div>
           </div>
           <b-loading
@@ -145,7 +113,8 @@
         </div>
       </div>
     </section>
-    <PhotoArea v-if="homeData.id && homeData.roleId == 2" :id="homeData.id" :phName="name" :phInstagram="homeData.instagramUrl"/>
+    <PhotographerArea v-if="homeData.id && homeData.roleId == 2" :id="homeData.id"/>
+    <AuthorizedUserArea v-if="homeData.id && homeData.roleId == 3" :id="homeData.id"/>
   </div>
 </template>
 
@@ -156,13 +125,15 @@ import { mapGetters } from "vuex";
 import { dashboardService } from "../../services/dashboard.service";
 import { EventBus } from "../.././event-bus";
 import Avatar from "vue-avatar/src/Avatar.vue";
-import PhotoArea from "@/components/PhotoArea.vue";
 import UploadPhoto from "@/components/UploadPhoto.vue";
 import UploadPhotoshoot from "@/components/UploadPhotoshoot.vue";
 import axios from "axios";
 import "lightgallery.js";
 import "lightgallery.js/dist/css/lightgallery.css";
 //import "@/assets/css/bootstrap.min.css";
+import { baseUrl } from "../../constants";
+import AuthorizedUserArea from "@/views/dashboard/AuthorizedUserArea.vue";
+import PhotographerArea from "@/views/dashboard/PhotographerArea.vue";
 
 @Component({
   computed: mapGetters({
@@ -171,9 +142,10 @@ import "lightgallery.js/dist/css/lightgallery.css";
   components: {
     Spinner,
     Avatar,
-    PhotoArea,
     UploadPhoto,
-    UploadPhotoshoot
+    UploadPhotoshoot,
+    AuthorizedUserArea,
+    PhotographerArea
   }
 })
 export default class DashboardHome extends Vue {
@@ -205,7 +177,7 @@ export default class DashboardHome extends Vue {
     //fd.append('id', this.homeData.id);
     axios
       .post(
-        `http://localhost:5000/api/image/changeuserimage/${this.homeData.id}`,
+        `${baseUrl}/api/image/changeuserimage/${this.homeData.id}`,
         fd,
         {
           headers: {

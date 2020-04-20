@@ -72,6 +72,7 @@ import axios from "axios";
 import "lightgallery.js";
 import "lightgallery.js/dist/css/lightgallery.css";
 //import "@/assets/css/bootstrap.min.css";
+import { baseUrl } from "../constants";
 
 @Component({
   computed: mapGetters({
@@ -126,7 +127,7 @@ export default class UploadPhoto extends Vue {
     let body = this.photoObject;
     axios
       .post(
-        `http://localhost:5000/api/image/uploadphoto/${this.photoObject.name}/${
+        `${baseUrl}/api/image/uploadphoto/${this.photoObject.name}/${
           this.photoObject.pType
         }`,
         fd,

@@ -217,21 +217,7 @@ export default class RegistrationForm extends Vue {
   }
 
   mounted() {
-    // this.user.roleId = 0;
-    // console.log(this.user.roleId);
-    // console.log("axios post...");
-    // axios.post("http://localhost:5000/api/image/getimage").then(response => {
-    //   console.log(response.data);
-    //   this.image = response.data;
-    // }).catch(e => {
-    //   console.log(e);
-    // });
-    // if(this.DynamicRegistration == 2){
-    //   this.changeRoleToPhotographer()
-    // }
-    // else if(this.DynamicRegistration == 3){
-    //   this.changeRoleToUser();
-    // }
+
   }
 
   get roleid() {

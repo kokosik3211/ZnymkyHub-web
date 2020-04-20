@@ -49,6 +49,7 @@ import { User } from "../models/user.interface";
 import { mapGetters } from "vuex";
 import Avatar from "vue-avatar/src/Avatar.vue";
 import axios from "axios";
+import { baseUrl } from "../constants";
 
 @Component({
   computed: mapGetters({
@@ -64,7 +65,7 @@ export default class PhotographersForMain extends Vue {
 
   created() {
     axios
-      .post("http://localhost:5000/api/user/photographersformain")
+      .post(`${baseUrl}/api/user/photographersformain`)
       .then(response => {
         this.Photographers = response.data;
         //console.log(this.Photographers);
@@ -74,7 +75,7 @@ export default class PhotographersForMain extends Vue {
       });
 
     axios
-      .post("http://localhost:5000/api/user/photographerscount")
+      .post(`${baseUrl}/api/user/photographerscount`)
       .then(response => {
         this.PhotographersCount = response.data;
         //console.log(`Photographers count = ${this.PhotographersCount}`);

@@ -167,13 +167,7 @@ export default class Home extends Vue {
   private user = {} as User;
 
   mounted() {
-    // axios.post("http://localhost:5000/api/user/getuser").then(response => {
-    //         console.log(response.data);
-    //         this.user = response.data;
-    //         console.log(this.user);
-    //     }).catch(e => {
-    //         console.log(e);
-    // });
+
   }
 
   public scrollMeTo(id: string) {
@@ -187,16 +181,6 @@ export default class Home extends Vue {
     var y = position.top;
     window.scrollTo(0, y);
   }
-
-  // public test(){
-  //   axios.post("http://localhost:5000/api/user/gettestuser").then(response => {
-  //           console.log(response.data);
-  //           this.user = response.data;
-  //           console.log(this.user);
-  //       }).catch(e => {
-  //           console.log(e);
-  //   });
-  // }
 }
 </script>
 

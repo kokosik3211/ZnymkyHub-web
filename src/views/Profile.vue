@@ -1,5 +1,10 @@
 <template>
   <div>
+    <b-loading
+      :is-full-page="true"
+      :active.sync="isLoading"
+      :can-cancel="true"
+    ></b-loading>
     <section class="hero is-light" style="margin-top: 50px;">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -50,19 +55,19 @@
                 <i class="fas fa-phone mr-2"></i> {{ homeData.phoneNumber }}
               </p>
             </div>
-            <div class="column is-3">
-                
+            <div v-if="isAuthenticated" class="column is-3 has-text-right">
+                <a class="actions" @click="addPhToFavouriteAction()">
+                  <span class="icon is-medium favourite-action">
+                    <i v-if="homeData.phFavourite" class="fas fa-star fa-2x"></i>
+                    <i v-else class="far fa-star fa-2x"></i>
+                  </span>
+                </a>
             </div>
           </div>
-          <b-loading
-            :is-full-page="isFullPage"
-            :active.sync="isLoading"
-            :can-cancel="true"
-          ></b-loading>
         </div>
       </div>
     </section>
-    <PhotoArea v-if="homeData.id" :id="homeData.id" :phName="name" :phInstagram="homeData.instagramUrl"/>
+    <PhotoArea v-if="homeData.id" :id="homeData.id" :contentType="'photos'"/>
   </div>
 </template>
 
@@ -77,6 +82,7 @@ import axios from "axios";
 
 @Component({
   computed: mapGetters({
+    isAuthenticated: "auth/isAuthenticated",
     profile: "user/profile"
   }),
   components: {
@@ -90,8 +96,7 @@ export default class DashboardHome extends Vue {
   private homeData = {} as any;
 
   // Loading
-  private isLoading = false;
-  private isFullPage = true;
+  private isLoading = true;
 
   get name() {
     return this.homeData.firstName + " " + this.homeData.lastName;
@@ -105,6 +110,20 @@ export default class DashboardHome extends Vue {
     });
   }
 
+  addPhToFavouriteAction () {
+      var star = $(".favourite-action .fa-star");
+      var isUnfavourite = star.hasClass("far");
+      if(isUnfavourite){
+        star.removeClass("far");
+        star.addClass("fas");
+        dashboardService.addPhotographerToFavourite(this.id).then((resp) => {});
+      } else {
+        star.removeClass("fas");
+        star.addClass("far");
+        dashboardService.removePhotographerFromFavourite(this.id).then((resp) => {});
+      }
+    }
+
   mounted() {
 
   }
@@ -112,4 +131,5 @@ export default class DashboardHome extends Vue {
 </script>
 
 <style scoped>
+a.actions { color: inherit; }
 </style>

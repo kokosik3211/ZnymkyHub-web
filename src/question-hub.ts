@@ -1,5 +1,6 @@
 //import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import * as signalR from "@microsoft/signalr";
+import { baseUrl } from "./constants";
 
 export default {
   install(Vue: any) {
@@ -15,7 +16,7 @@ export default {
 
     Vue.prototype.startSignalR = (jwtToken: any) => {
       connection = new signalR.HubConnectionBuilder()
-        .withUrl("http://localhost:5000/question-hub", {
+        .withUrl(`${baseUrl}/question-hub`, {
           accessTokenFactory: () => jwtToken
         })
         //.configureLogging(LogLevel.Information)

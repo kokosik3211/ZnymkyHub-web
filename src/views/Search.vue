@@ -180,6 +180,7 @@
       style="margin-top: 24px; margin-bottom: 24px;"
     >
       <div
+        v-if="SearchResultList.length"
         class="columns is-mobile is-multiline is-centered"
         style="margin-top:15px;"
       >
@@ -257,6 +258,15 @@
           </div>
         </div>
       </div>
+      <section v-else class="hero is-medium is-light is-bold rounded-corners">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title has-text-centered">
+              Sorry, no photographers found by the following criteria 😥
+            </h1>
+          </div>
+        </div>
+    </section>
       <hr />
       <b-pagination
         :total="total"
@@ -281,6 +291,7 @@ import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import Avatar from "vue-avatar/src/Avatar.vue";
 import { User } from "../models/user.interface";
 import axios from "axios";
+import { baseUrl } from "../constants";
 
 @Component({
   components: {
@@ -308,7 +319,7 @@ export default class Search extends Vue {
     //console.log(`Old 'current' value = ${oldValue}`);
     this.isLoading = true;
     axios
-      .post(`http://localhost:5000/api/search/performsearch/`)
+      .post(`${baseUrl}/api/search/performsearch/`)
       .then(response => {
         //this.Photos = response.data;
         //console.log(this.Photos);
@@ -380,6 +391,7 @@ export default class Search extends Vue {
     this.selectedPhType = this.$route.params.selectedPhType;
     if (this.selectedCity != undefined && this.selectedPhType != undefined) {
       this.isLoading = true;
+      this.submitSearch();
     }
   }
 
@@ -409,7 +421,7 @@ export default class Search extends Vue {
     this.isLoading = true;
     axios
       .post(
-        `http://localhost:5000/api/search/performsearch/${this.selectedCity}/${
+        `${baseUrl}/api/search/performsearch/${this.selectedCity}/${
           this.selectedPhType
         }`
       )
@@ -509,5 +521,9 @@ img {
 
 .img__wrap:hover .img__description {
   transform: translateY(0);
+}
+
+.rounded-corners {
+  border-radius: 20px 40px;
 }
 </style>

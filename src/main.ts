@@ -12,6 +12,7 @@ import $ from "jquery";
 import "@fortawesome/fontawesome-free/css/all.css";
 import QuestionHub from "./question-hub";
 import "bulma-helpers/css/bulma-helpers.min.css";
+import { baseUrl } from "./constants";
 
 Vue.use(Buefy, {
   defaultIconPack: "mdi"
@@ -21,7 +22,7 @@ Vue.use(QuestionHub);
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = baseUrl;
 
 Vue.prototype.$http = axios;
 
